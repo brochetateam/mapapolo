@@ -1,0 +1,236 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" fill="none">
+  <!-- PLANTA BAJA — Polo Nacional de Contenidos Digitales -->
+  <!-- Plano vectorizado interactivo -->
+
+  <!-- Background -->
+  <rect width="900" height="620" rx="16" fill="#f8fafc"/>
+
+  <!-- Edificio exterior -->
+  <rect x="40" y="40" width="820" height="540" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+
+  <!-- ==================== PASILLOS ==================== -->
+  <!-- Pasillo central horizontal -->
+  <rect x="180" y="280" width="540" height="60" fill="#cbd5e1" rx="2"/>
+  <text x="450" y="316" text-anchor="middle" fill="#64748b" font-size="11" font-weight="500" font-family="Inter, system-ui">PASILLO CENTRAL</text>
+
+  <!-- Pasillo vertical izquierdo -->
+  <rect x="180" y="100" width="40" height="300" fill="#cbd5e1" rx="2"/>
+
+  <!-- Pasillo vertical derecho -->
+  <rect x="580" y="100" width="40" height="300" fill="#cbd5e1" rx="2"/>
+
+  <!-- ==================== ZONA NORTE ==================== -->
+
+  <!-- Entrada IAT (norte) -->
+  <g class="zone" data-space="recepcion" data-name="Entrada IAT">
+    <rect x="350" y="40" width="200" height="50" rx="6" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+    <text x="450" y="70" text-anchor="middle" fill="#1d4ed8" font-size="12" font-weight="600" font-family="Inter, system-ui">ENTRADA IAT</text>
+  </g>
+
+  <!-- Recepción / Hall -->
+  <g class="zone" data-space="recepcion" data-name="Recepción / Hall">
+    <rect x="220" y="100" width="160" height="90" rx="6" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+    <text x="300" y="140" text-anchor="middle" fill="#1d4ed8" font-size="12" font-weight="600" font-family="Inter, system-ui">Recepción</text>
+    <text x="300" y="158" text-anchor="middle" fill="#3b82f6" font-size="10" font-family="Inter, system-ui">/ Hall</text>
+  </g>
+
+  <!-- Ágora 1 (noreste) -->
+  <g class="zone" data-space="agora" data-name="Ágora 1">
+    <rect x="630" y="40" width="140" height="80" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+    <text x="700" y="78" text-anchor="middle" fill="#b45309" font-size="12" font-weight="600" font-family="Inter, system-ui">Ágora 1</text>
+    <text x="700" y="96" text-anchor="middle" fill="#d97706" font-size="9" font-family="Inter, system-ui">Eventos</text>
+  </g>
+
+  <!-- Almacén (noreste) -->
+  <rect x="630" y="125" width="60" height="40" rx="4" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1"/>
+  <text x="660" y="150" text-anchor="middle" fill="#64748b" font-size="8" font-family="Inter, system-ui">Almacén</text>
+
+  <!-- WC (noreste) -->
+  <rect x="700" y="125" width="40" height="40" rx="4" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1"/>
+  <text x="720" y="150" text-anchor="middle" fill="#64748b" font-size="8" font-family="Inter, system-ui">WC</text>
+
+  <!-- ==================== ZONA OESTE ==================== -->
+
+  <!-- Almacén 4 (oeste) -->
+  <rect x="40" y="100" width="60" height="50" rx="4" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1"/>
+  <text x="70" y="130" text-anchor="middle" fill="#64748b" font-size="8" font-family="Inter, system-ui">Almacén 4</text>
+
+  <!-- Almacén 5 (oeste) -->
+  <rect x="40" y="155" width="60" height="50" rx="4" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1"/>
+  <text x="70" y="185" text-anchor="middle" fill="#64748b" font-size="8" font-family="Inter, system-ui">Almacén 5</text>
+
+  <!-- Office -->
+  <g class="zone" data-space="recepcion" data-name="Office">
+    <rect x="110" y="100" width="60" height="50" rx="4" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="140" y="130" text-anchor="middle" fill="#475569" font-size="9" font-weight="500" font-family="Inter, system-ui">Office</text>
+  </g>
+
+  <!-- Antesala / Office -->
+  <g class="zone" data-space="recepcion" data-name="Antesala / Office">
+    <rect x="110" y="155" width="60" height="50" rx="4" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="140" y="178" text-anchor="middle" fill="#475569" font-size="8" font-weight="500" font-family="Inter, system-ui">Antesala</text>
+    <text x="140" y="190" text-anchor="middle" fill="#475569" font-size="8" font-family="Inter, system-ui">Office</text>
+  </g>
+
+  <!-- ==================== PATIOS ==================== -->
+
+  <!-- Patio 1 -->
+  <g class="zone" data-space="patio1" data-name="Patio 1">
+    <rect x="240" y="200" width="100" height="70" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+    <text x="290" y="232" text-anchor="middle" fill="#047857" font-size="12" font-weight="600" font-family="Inter, system-ui">Patio 1</text>
+    <text x="290" y="250" text-anchor="middle" fill="#059669" font-size="9" font-family="Inter, system-ui">☕ Descanso</text>
+  </g>
+
+  <!-- Patio 2 -->
+  <g class="zone" data-space="patio2" data-name="Patio 2">
+    <rect x="430" y="200" width="100" height="70" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+    <text x="480" y="232" text-anchor="middle" fill="#047857" font-size="12" font-weight="600" font-family="Inter, system-ui">Patio 2</text>
+    <text x="480" y="250" text-anchor="middle" fill="#059669" font-size="9" font-family="Inter, system-ui">🍽️ Comedor</text>
+  </g>
+
+  <!-- ==================== AULAS (centro-sur) ==================== -->
+
+  <!-- Aula 1 -->
+  <g class="zone" data-space="aula1" data-name="Aula 1">
+    <rect x="230" y="350" width="90" height="70" rx="6" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="275" y="382" text-anchor="middle" fill="#6d28d9" font-size="11" font-weight="600" font-family="Inter, system-ui">AU 1</text>
+    <text x="275" y="400" text-anchor="middle" fill="#7c3aed" font-size="8" font-family="Inter, system-ui">Formación</text>
+  </g>
+
+  <!-- Aula 2 -->
+  <g class="zone" data-space="aula2" data-name="Aula 2">
+    <rect x="330" y="350" width="90" height="70" rx="6" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="375" y="382" text-anchor="middle" fill="#6d28d9" font-size="11" font-weight="600" font-family="Inter, system-ui">AU 2</text>
+    <text x="375" y="400" text-anchor="middle" fill="#7c3aed" font-size="8" font-family="Inter, system-ui">UMA</text>
+  </g>
+
+  <!-- Aula 3 -->
+  <g class="zone" data-space="aula3" data-name="Aula 3">
+    <rect x="230" y="430" width="90" height="60" rx="6" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+    <text x="275" y="458" text-anchor="middle" fill="#6d28d9" font-size="11" font-weight="600" font-family="Inter, system-ui">AU 3</text>
+    <text x="275" y="474" text-anchor="middle" fill="#7c3aed" font-size="8" font-family="Inter, system-ui">Diseño</text>
+  </g>
+
+  <!-- Aula 4 -->
+  <g class="zone" data-space="aula4" data-name="Aula 4">
+    <rect x="330" y="430" width="90" height="60" rx="6" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+    <text x="375" y="458" text-anchor="middle" fill="#6d28d9" font-size="11" font-weight="600" font-family="Inter, system-ui">AU 4</text>
+    <text x="375" y="474" text-anchor="middle" fill="#7c3aed" font-size="8" font-family="Inter, system-ui">IA / ML</text>
+  </g>
+
+  <!-- Aula 5 -->
+  <g class="zone" data-space="aula5" data-name="Aula 5">
+    <rect x="230" y="500" width="90" height="60" rx="6" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+    <text x="275" y="528" text-anchor="middle" fill="#6d28d9" font-size="11" font-weight="600" font-family="Inter, system-ui">AU 5</text>
+    <text x="275" y="544" text-anchor="middle" fill="#7c3aed" font-size="8" font-family="Inter, system-ui">Ciberseg.</text>
+  </g>
+
+  <!-- Aula 6 -->
+  <g class="zone" data-space="aula6" data-name="Aula 6">
+    <rect x="330" y="500" width="90" height="60" rx="6" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+    <text x="375" y="528" text-anchor="middle" fill="#6d28d9" font-size="11" font-weight="600" font-family="Inter, system-ui">AU 6</text>
+    <text x="375" y="544" text-anchor="middle" fill="#7c3aed" font-size="8" font-family="Inter, system-ui">Multiusos</text>
+  </g>
+
+  <!-- ==================== OFICINAS (este) ==================== -->
+
+  <!-- OF 1 -->
+  <g class="zone" data-space="modulo1" data-name="Módulo 1">
+    <rect x="440" y="350" width="100" height="70" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="490" y="380" text-anchor="middle" fill="#e2e8f0" font-size="11" font-weight="600" font-family="Inter, system-ui">Módulo 1</text>
+    <text x="490" y="398" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="Inter, system-ui">OF 1</text>
+    <text x="490" y="410" text-anchor="middle" fill="#60a5fa" font-size="7" font-family="Inter, system-ui">Forgotten · InOne · Releevant</text>
+  </g>
+
+  <!-- OF 2 -->
+  <g class="zone" data-space="modulo2" data-name="Módulo 2">
+    <rect x="550" y="100" width="60" height="80" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="580" y="138" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="600" font-family="Inter, system-ui">OF 2</text>
+    <text x="580" y="155" text-anchor="middle" fill="#94a3b8" font-size="7" font-family="Inter, system-ui">Almacén</text>
+    <text x="580" y="167" text-anchor="middle" fill="#94a3b8" font-size="7" font-family="Inter, system-ui">Mantenim.</text>
+  </g>
+
+  <!-- OF 3 -->
+  <g class="zone" data-space="modulo2" data-name="Módulo 2">
+    <rect x="550" y="190" width="60" height="80" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+    <text x="580" y="228" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="600" font-family="Inter, system-ui">OF 3</text>
+  </g>
+
+  <!-- OF 4 -->
+  <g class="zone" data-space="modulo2" data-name="Módulo 2">
+    <rect x="550" y="350" width="60" height="70" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+    <text x="580" y="388" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="600" font-family="Inter, system-ui">OF 4</text>
+  </g>
+
+  <!-- OF 5 -->
+  <g class="zone" data-space="modulo2" data-name="Módulo 2">
+    <rect x="550" y="430" width="60" height="70" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+    <text x="580" y="468" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="600" font-family="Inter, system-ui">OF 5</text>
+  </g>
+
+  <!-- OF 6 -->
+  <g class="zone" data-space="modulo2" data-name="Módulo 2">
+    <rect x="630" y="500" width="80" height="60" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+    <text x="670" y="528" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="600" font-family="Inter, system-ui">OF 6</text>
+  </g>
+
+  <!-- ==================== SHOWROOM ==================== -->
+  <g class="zone" data-space="showroom" data-name="Showroom">
+    <rect x="630" y="200" width="140" height="70" rx="6" fill="#fef9c3" stroke="#eab308" stroke-width="2"/>
+    <text x="700" y="232" text-anchor="middle" fill="#a16207" font-size="12" font-weight="600" font-family="Inter, system-ui">Showroom</text>
+    <text x="700" y="250" text-anchor="middle" fill="#ca8a04" font-size="9" font-family="Inter, system-ui">Exposiciones</text>
+  </g>
+
+  <!-- ==================== ZONA SUR ==================== -->
+
+  <!-- S1 -->
+  <rect x="230" y="570" width="40" height="30" rx="4" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1"/>
+  <text x="250" y="590" text-anchor="middle" fill="#64748b" font-size="8" font-family="Inter, system-ui">S1</text>
+
+  <!-- S2 -->
+  <rect x="280" y="570" width="40" height="30" rx="4" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1"/>
+  <text x="300" y="590" text-anchor="middle" fill="#64748b" font-size="8" font-family="Inter, system-ui">S2</text>
+
+  <!-- CW2 -->
+  <g class="zone" data-space="modulo1" data-name="Zona Coworking Baja">
+    <rect x="340" y="570" width="80" height="30" rx="4" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+    <text x="380" y="590" text-anchor="middle" fill="#1d4ed8" font-size="8" font-weight="500" font-family="Inter, system-ui">CW2</text>
+  </g>
+
+  <!-- CW1 -->
+  <g class="zone" data-space="modulo1" data-name="Zona Coworking Baja">
+    <rect x="550" y="570" width="80" height="30" rx="4" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+    <text x="590" y="590" text-anchor="middle" fill="#1d4ed8" font-size="8" font-weight="500" font-family="Inter, system-ui">CW1</text>
+  </g>
+
+  <!-- Recepción 2 (sur) -->
+  <g class="zone" data-space="recepcion" data-name="Recepción 2">
+    <rect x="230" y="570" width="0" height="0" rx="0" fill="transparent" stroke="transparent"/>
+  </g>
+
+  <!-- ==================== LABELS EDIFICIO ==================== -->
+  <text x="450" y="28" text-anchor="middle" fill="#334155" font-size="14" font-weight="700" font-family="Inter, system-ui">PLANTA BAJA</text>
+  <text x="450" y="618" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="Inter, system-ui">Avda. Sor Teresa Prat, 15 (Tabacalera) — Polo Nacional de Contenidos Digitales</text>
+
+  <!-- Leyenda de colores -->
+  <g transform="translate(630, 290)">
+    <rect x="0" y="0" width="140" height="190" rx="8" fill="white" stroke="#e2e8f0" stroke-width="1" opacity="0.9"/>
+    <text x="10" y="20" fill="#334155" font-size="9" font-weight="600" font-family="Inter, system-ui">LEYENDA</text>
+    <rect x="10" y="30" width="12" height="12" rx="3" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+    <text x="28" y="40" fill="#475569" font-size="8" font-family="Inter, system-ui">Entrada / Recepción</text>
+    <rect x="10" y="50" width="12" height="12" rx="3" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+    <text x="28" y="60" fill="#475569" font-size="8" font-family="Inter, system-ui">Ágora / Eventos</text>
+    <rect x="10" y="70" width="12" height="12" rx="3" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+    <text x="28" y="80" fill="#475569" font-size="8" font-family="Inter, system-ui">Patios / Descanso</text>
+    <rect x="10" y="90" width="12" height="12" rx="3" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1"/>
+    <text x="28" y="100" fill="#475569" font-size="8" font-family="Inter, system-ui">Aulas de Formación</text>
+    <rect x="10" y="110" width="12" height="12" rx="3" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+    <text x="28" y="120" fill="#475569" font-size="8" font-family="Inter, system-ui">Oficinas / Módulos</text>
+    <rect x="10" y="130" width="12" height="12" rx="3" fill="#fef9c3" stroke="#eab308" stroke-width="1"/>
+    <text x="28" y="140" fill="#475569" font-size="8" font-family="Inter, system-ui">Showroom</text>
+    <rect x="10" y="150" width="12" height="12" rx="3" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1"/>
+    <text x="28" y="160" fill="#475569" font-size="8" font-family="Inter, system-ui">Almacén / Servicios</text>
+    <rect x="10" y="170" width="12" height="12" rx="3" fill="#cbd5e1" stroke="#94a3b8" stroke-width="1"/>
+    <text x="28" y="180" fill="#475569" font-size="8" font-family="Inter, system-ui">Pasillos</text>
+  </g>
+</svg>
