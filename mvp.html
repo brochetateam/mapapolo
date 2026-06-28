@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polo Digital - Directorio de Sinergias IA</title>
+    <!-- Tailwind CSS para diseño moderno y ágil -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilos interactivos para el mapa SVG */
+        .map-space {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .map-space:hover {
+            fill: #8b5cf6 !important;
+            /* Violeta al pasar el ratón */
+            fill-opacity: 0.4;
+        }
+
+        .map-space.active {
+            fill: #ec4899 !important;
+            /* Rosa para selección */
+            fill-opacity: 0.6;
+            stroke: #db2777;
+            stroke-width: 2px;
+        }
+
+        .map-space.highlighted {
+            animation: pulse-highlight 1.5s infinite;
+        }
+
+        @keyframes pulse-highlight {
+            0% {
+                fill: #10b981;
+                fill-opacity: 0.3;
+            }
+
+            50% {
+                fill: #10b981;
+                fill-opacity: 0.7;
+            }
+
+            100% {
+                fill: #10b981;
+                fill-opacity: 0.3;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans">
+
+    <!-- Encabezado -->
+    <header
+        class="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-50 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <div
+                class="h-10 w-10 bg-gradient-to-tr from-violet-600 to-pink-500 rounded-lg flex items-center justify-center font-bold text-white shadow-lg">
+                P
+            </div>
+            <div>
+                <h1
+                    class="text-xl font-bold tracking-tight bg-gradient-to-r from-violet-400 via-pink-400 to-amber-300 bg-clip-text text-transparent">
+                    Polo Digital Connect</h1>
+                <p class="text-xs text-slate-400">Directorio Inteligente & Mapa de Sinergias</p>
+            </div>
+        </div>
+        <!-- Buscador general -->
+        <div class="relative w-full sm:w-80">
+            <input type="text" id="searchInput" placeholder="Busca empresas, tecnologías (VR, audio, IA)..."
+                class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 pl-10 text-sm focus:outline-none focus:border-violet-500 text-slate-200">
+            <span class="absolute left-3 top-2.5 text-slate-400">🔍</span>
+        </div>
+    </header>
+
+    <!-- Contenedor Principal -->
+    <main class="max-w-7xl mx-auto p-4 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Panel Izquierdo: Mapa e interactividad -->
+        <section class="lg:col-span-8 bg-slate-950 p-6 rounded-2xl border border-slate-800 flex flex-col gap-6">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-lg font-semibold text-slate-200">Mapa de Instalaciones</h2>
+                    <p class="text-xs text-slate-400">Haz clic en un área para explorar empresas e ideas de sinergia.
+                    </p>
+                </div>
+                <!-- Selector de planta -->
+                <div class="inline-flex rounded-lg p-1 bg-slate-900 border border-slate-800">
+                    <button id="btnPlantaBaja" onclick="switchFloor('baja')"
+                        class="px-4 py-1.5 rounded-md text-xs font-medium transition bg-violet-600 text-white shadow">
+                        Planta Baja
+                    </button>
+                    <button id="btnPlantaPrimera" onclick="switchFloor('primera')"
+                        class="px-4 py-1.5 rounded-md text-xs font-medium transition text-slate-400 hover:text-white">
+                        Planta Primera
+                    </button>
+                </div>
+            </div>
+
+            <!-- Contenedor del Mapa SVG interactivo -->
+            <div
+                class="relative bg-slate-900 rounded-xl border border-slate-800/50 p-4 aspect-[4/3] flex items-center justify-center overflow-hidden">
+
+                <!-- PLANTA BAJA SVG -->
+                <svg id="svgPlantaBaja" class="w-full h-full max-h-[450px]" viewBox="0 0 800 500" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <!-- Fondo/Estructura externa de Tabacalera E3 -->
+                    <rect x="10" y="10" width="780" height="480" rx="16" fill="#0f172a" stroke="#334155"
+                        stroke-width="2" />
+                    <text x="30" y="45" fill="#475569" font-size="14" font-weight="bold">PLANTA BAJA - ACCESO
+                        PRINCIPAL</text>
+
+                    <!-- Pasillos comunes (Fondo neutral) -->
+                    <rect x="360" y="60" width="80" height="380" fill="#1e293b" rx="4" />
+                    <rect x="80" y="220" width="640" height="60" fill="#1e293b" rx="4" />
+
+                    <!-- Zonas Comunes / Ágora -->
+                    <rect id="space-recepcion" class="map-space" x="350" y="400" width="100" height="60" rx="8"
+                        fill="#1e1b4b" stroke="#4338ca" stroke-width="2" />
+                    <text x="400" y="435" fill="#818cf8" font-size="11" text-anchor="middle"
+                        pointer-events="none">Recepción</text>
+
+                    <rect id="space-agora" class="map-space" x="250" y="60" width="100" height="150" rx="8"
+                        fill="#311042" stroke="#701a75" stroke-width="2" />
+                    <text x="300" y="140" fill="#d946ef" font-size="12" font-weight="bold" text-anchor="middle"
+                        pointer-events="none">Ágora Eventos</text>
+
+                    <!-- Patios -->
+                    <rect x="130" y="80" width="100" height="100" rx="12" fill="#022c22" stroke="#047857"
+                        stroke-width="2" />
+                    <text x="180" y="135" fill="#34d399" font-size="12" text-anchor="middle">Patio 1</text>
+
+                    <rect x="570" y="80" width="100" height="100" rx="12" fill="#022c22" stroke="#047857"
+                        stroke-width="2" />
+                    <text x="620" y="135" fill="#34d399" font-size="12" text-anchor="middle">Patio 2</text>
+
+                    <!-- Aulas de Formación / Promálaga -->
+                    <rect id="space-aula1" class="map-space" x="80" y="290" width="120" height="80" rx="8"
+                        fill="#172554" stroke="#1d4ed8" stroke-width="2" />
+                    <text x="140" y="335" fill="#60a5fa" font-size="11" text-anchor="middle" pointer-events="none">Aula
+                        1 (Formación)</text>
+
+                    <rect id="space-aula2" class="map-space" x="210" y="290" width="120" height="80" rx="8"
+                        fill="#172554" stroke="#1d4ed8" stroke-width="2" />
+                    <text x="270" y="335" fill="#60a5fa" font-size="11" text-anchor="middle" pointer-events="none">Aula
+                        2 (UMA)</text>
+
+                    <!-- Despachos / Empresas Consolidadas -->
+                    <rect id="space-despacho1" class="map-space" x="470" y="290" width="110" height="130" rx="8"
+                        fill="#18181b" stroke="#3f3f46" stroke-width="2" />
+                    <text x="525" y="360" fill="#a1a1aa" font-size="11" text-anchor="middle"
+                        pointer-events="none">Módulo 1: AI Tech</text>
+
+                    <rect id="space-despacho2" class="map-space" x="590" y="290" width="130" height="130" rx="8"
+                        fill="#18181b" stroke="#3f3f46" stroke-width="2" />
+                    <text x="655" y="360" fill="#a1a1aa" font-size="11" text-anchor="middle"
+                        pointer-events="none">Módulo 2: Render3D</text>
+                </svg>
+
+                <!-- PLANTA PRIMERA SVG (Oculto inicialmente) -->
+                <svg id="svgPlantaPrimera" class="w-full h-full max-h-[450px] hidden" viewBox="0 0 800 500" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="780" height="480" rx="16" fill="#0f172a" stroke="#334155"
+                        stroke-width="2" />
+                    <text x="30" y="45" fill="#475569" font-size="14" font-weight="bold">PLANTA PRIMERA - INNOVACIÓN &
+                        LABS</text>
+
+                    <!-- Pasillos -->
+                    <rect x="360" y="60" width="80" height="380" fill="#1e293b" rx="4" />
+                    <rect x="80" y="220" width="640" height="60" fill="#1e293b" rx="4" />
+
+                    <!-- Coworking Go2Work -->
+                    <rect id="space-coworking" class="map-space" x="80" y="60" width="270" height="150" rx="8"
+                        fill="#1e1b4b" stroke="#4338ca" stroke-width="2" />
+                    <text x="215" y="140" fill="#818cf8" font-size="14" font-weight="bold" text-anchor="middle"
+                        pointer-events="none">Coworking Go2Work</text>
+
+                    <!-- Laboratorios Especializados -->
+                    <rect id="space-lab-vr" class="map-space" x="450" y="60" width="130" height="150" rx="8"
+                        fill="#581c87" stroke="#86198f" stroke-width="2" />
+                    <text x="515" y="130" fill="#e879f9" font-size="11" font-weight="bold" text-anchor="middle"
+                        pointer-events="none">Lab. VR & XR</text>
+
+                    <rect id="space-lab-audio" class="map-space" x="590" y="60" width="130" height="150" rx="8"
+                        fill="#0f3736" stroke="#0d9488" stroke-width="2" />
+                    <text x="655" y="130" fill="#2dd4bf" font-size="11" font-weight="bold" text-anchor="middle"
+                        pointer-events="none">Estudio Audio</text>
+
+                    <!-- Despachos Startup -->
+                    <rect id="space-despacho3" class="map-space" x="80" y="290" width="120" height="120" rx="8"
+                        fill="#18181b" stroke="#3f3f46" stroke-width="2" />
+                    <text x="140" y="355" fill="#a1a1aa" font-size="11" text-anchor="middle"
+                        pointer-events="none">Despacho 3: Pixel</text>
+
+                    <rect id="space-despacho4" class="map-space" x="210" y="290" width="120" height="120" rx="8"
+                        fill="#18181b" stroke="#3f3f46" stroke-width="2" />
+                    <text x="270" y="355" fill="#a1a1aa" font-size="11" text-anchor="middle"
+                        pointer-events="none">Despacho 4: GameDev</text>
+
+                    <!-- Zona Impresión 3D / Prototipado -->
+                    <rect id="space-lab-3d" class="map-space" x="450" y="290" width="270" height="120" rx="8"
+                        fill="#4c1d95" stroke="#6d28d9" stroke-width="2" />
+                    <text x="585" y="355" fill="#c084fc" font-size="12" font-weight="bold" text-anchor="middle"
+                        pointer-events="none">Lab. Prototipado & 3D</text>
+                </svg>
+
+            </div>
+        </section>
+
+        <!-- Panel Derecho: Información y Sinergias (Simulación IA) -->
+        <aside class="lg:col-span-4 flex flex-col gap-6">
+
+            <!-- Tarjeta Info del Espacio -->
+            <div id="infoCard"
+                class="bg-slate-950 p-6 rounded-2xl border border-slate-800 flex flex-col gap-4 min-h-[400px]">
+                <div id="infoDefault"
+                    class="flex flex-col items-center justify-center text-center h-full my-auto text-slate-400">
+                    <span class="text-4xl mb-3">📍</span>
+                    <p class="font-medium text-slate-300">Selecciona una zona en el mapa</p>
+                    <p class="text-xs max-w-[200px] mt-1">O escribe en el buscador para ver las empresas instaladas y
+                        sus sinergias sugeridas.</p>
+                </div>
+
+                <!-- Detalle Activo (Oculto al inicio) -->
+                <div id="infoContent" class="hidden flex flex-col gap-4">
+                    <div>
+                        <span id="infoFloorTag"
+                            class="text-[10px] bg-slate-800 px-2.5 py-1 rounded-full text-slate-400 font-semibold uppercase tracking-wider">PLANTA
+                            BAJA</span>
+                        <h3 id="infoTitle" class="text-xl font-bold text-white mt-2">Nombre del Espacio</h3>
+                        <p id="infoDesc" class="text-xs text-slate-400">Descripción detallada del espacio o laboratorio
+                            físico.</p>
+                    </div>
+
+                    <hr class="border-slate-800">
+
+                    <!-- Empresas en el espacio -->
+                    <div>
+                        <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">Empresas en esta
+                            zona:</h4>
+                        <div id="infoCompaniesList" class="flex flex-col gap-2">
+                            <!-- Inyectado por JS -->
+                        </div>
+                    </div>
+
+                    <hr class="border-slate-800">
+
+                    <!-- Sinergias IA -->
+                    <div
+                        class="bg-gradient-to-r from-violet-950/40 to-pink-950/20 border border-violet-800/40 p-4 rounded-xl">
+                        <div class="flex items-center gap-1.5 mb-2">
+                            <span class="text-sm">✨</span>
+                            <h4 class="text-xs font-bold text-violet-300 uppercase tracking-wider">Sinergia Recomendada
+                                por IA</h4>
+                        </div>
+                        <p id="infoSynergyText" class="text-xs text-slate-300 leading-relaxed">
+                            Selecciona una empresa para analizar posibles conexiones y sinergias comerciales.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Listado rápido de empresas registradas (para ayuda rápida) -->
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs">
+                <p class="font-semibold text-slate-300 mb-2">💡 Empresas Destacadas de la semana:</p>
+                <ul class="space-y-1 text-slate-400">
+                    <li>• <span class="text-violet-400">Pixel & Code</span> (Videojuegos, Despacho 3)</li>
+                    <li>• <span class="text-violet-400">EduVerse VR</span> (Educación virtual, Coworking)</li>
+                    <li>• <span class="text-violet-400">AudioXperience</span> (Banda sonora, Lab. Audio)</li>
+                    <li>• <span class="text-violet-400">AI-Match</span> (Modelos LLM, Módulo 1)</li>
+                </ul>
+            </div>
+        </aside>
+
+    </main>
+
+    <!-- JavaScript interactivo -->
+    <script>
+        // 1. Datos del Polo Digital (Habitantes, localización y Sinergias IA)
+        const spacesData = {
+            'space-recepcion': {
+                title: "Recepción Principal",
+                floor: "Planta Baja",
+                desc: "Acceso principal del edificio de Tabacalera (Módulo E3). Punto de control y atención al visitante.",
+                companies: [],
+                synergy: "Ideal para eventos de networking espontáneo. La IA recomienda conectar aquí mediante el escaneo de QRs de contacto rápido."
+            },
+            'space-agora': {
+                title: "Ágora de Eventos",
+                floor: "Planta Baja",
+                desc: "Zona central abierta adaptada para ponencias, pitchs, competiciones de esports y demo-days.",
+                companies: [
+                    { name: "Promálaga Eventos", sector: "Institución / Hub", tech: ["Networking", "Fomento de empleo"] }
+                ],
+                synergy: "Se sugiere programar sinergias tipo 'Matchmaking rápido' con los residentes de Planta Primera coincidiendo con eventos semanales de gaming."
+            },
+            'space-aula1': {
+                title: "Aula 1 (Formación)",
+                floor: "Planta Baja",
+                desc: "Aula de capacitación tecnológica y desarrollo avanzado de software.",
+                companies: [
+                    { name: "Syllabus Academy", sector: "EdTech", tech: ["Python", "Machine Learning"] }
+                ],
+                synergy: "Las empresas del módulo 1 (AI Tech) podrían tutorizar proyectos finales de los alumnos de esta clase para captar talento joven sin coste de agencia."
+            },
+            'space-aula2': {
+                title: "Aula 2 (Espacio UMA)",
+                floor: "Planta Baja",
+                desc: "Aula universitaria gestionada por la Universidad de Málaga para cátedras de tecnología de contenidos digitales.",
+                companies: [
+                    { name: "Investigación UMA", sector: "Academia", tech: ["Ciberseguridad", "Blockchain"] }
+                ],
+                synergy: "Empresas en el coworking de la planta superior pueden subcontratar estudios de viabilidad técnica o auditorías de seguridad a los investigadores residentes."
+            },
+            'space-despacho1': {
+                title: "Módulo 1 (Oficina consolidada)",
+                floor: "Planta Baja",
+                desc: "Oficinas de empresas consolidadas en el sector de la inteligencia de datos.",
+                companies: [
+                    { name: "AI-Match", sector: "Inteligencia Artificial", tech: ["LLM", "Data Analytics", "Embeddings"] }
+                ],
+                synergy: "Sinergia activa con el estudio de animación 'Render3D' del Módulo 2: pueden entrenar un modelo generativo para automatizar texturas 3D reduciendo tiempos un 30%."
+            },
+            'space-despacho2': {
+                title: "Módulo 2 (Oficina consolidada)",
+                floor: "Planta Baja",
+                desc: "Oficina especializada en arte de pre-producción y optimización de assets.",
+                companies: [
+                    { name: "Render3D Studio", sector: "Contenido 3D", tech: ["Blender", "Maya", "Unreal Engine 5"] }
+                ],
+                synergy: "La IA sugiere conectar con 'EduVerse VR' del Coworking para proveer de entornos tridimensionales realistas aplicables a sus plataformas de formación en Realidad Virtual."
+            },
+            'space-coworking': {
+                title: "Go2Work (Coworking)",
+                floor: "Planta Primera",
+                desc: "Espacio compartido de alto rendimiento para startups emergentes y proyectos en fase semilla.",
+                companies: [
+                    { name: "EduVerse VR", sector: "EdTech / XR", tech: ["Virtual Reality", "C#", "Unity"] },
+                    { name: "IndieDevs Malaga", sector: "Videojuegos", tech: ["Gameplay", "PixelArt"] }
+                ],
+                synergy: "EduVerse VR e IndieDevs pueden beneficiarse mutuamente compartiendo licencias de software y optimizando juntas físicas de mecánicas de juego en Unity."
+            },
+            'space-lab-vr': {
+                title: "Laboratorio de Realidad Virtual (VR/XR)",
+                floor: "Planta Primera",
+                desc: "Espacio equipado con dispositivos de última generación (Apple Vision Pro, Meta Quest 3, etc.) para pruebas de concepto.",
+                companies: [
+                    { name: "MetaVerse Tech", sector: "Realidad Mixta", tech: ["XR", "Spatial Computing"] }
+                ],
+                synergy: "Cualquier startup de videojuegos de la planta baja puede solicitar tests cruzados en este laboratorio. La IA sugiere agendar testeo de control gestual."
+            },
+            'space-lab-audio': {
+                title: "Estudio de Grabación de Audio",
+                floor: "Planta Primera",
+                desc: "Estudio acústicamente aislado con equipamiento profesional de mezcla y doblaje de voz.",
+                companies: [
+                    { name: "AudioXperience", sector: "Sonido profesional", tech: ["Sound Design", "Locución", "Podcasts"] }
+                ],
+                synergy: "Su sinergia ideal es con 'Pixel & Code' (Despacho 3) para la composición de la banda sonora original y efectos foley de su próximo videojuego."
+            },
+            'space-despacho3': {
+                title: "Despacho 3",
+                floor: "Planta Primera",
+                desc: "Despacho privado de desarrollo para estudios en crecimiento.",
+                companies: [
+                    { name: "Pixel & Code", sector: "Videojuegos", tech: ["Unity", "C#", "2D Design"] }
+                ],
+                synergy: "Al compartir planta con el 'Estudio de Audio', pueden optimizar costes de outsourcing en sus efectos de audio integrando de forma rápida las pistas de sonido directas en el editor."
+            },
+            'space-despacho4': {
+                title: "Despacho 4",
+                floor: "Planta Primera",
+                desc: "Despacho de producción multimedia y cinematografía digital.",
+                companies: [
+                    { name: "Malaga FilmDev", sector: "Audiovisual", tech: ["Edición", "Cámaras 4K", "Efectos Visuales"] }
+                ],
+                synergy: "La IA aconseja conectar con 'Render3D Studio' (Planta Baja) para la delegación de fondos CGI complejos, disminuyendo tiempos en el pipeline de efectos visuales."
+            },
+            'space-lab-3d': {
+                title: "Laboratorio de Prototipado 3D",
+                floor: "Planta Primera",
+                desc: "Área técnica con impresoras FDM y de resina para la creación física de merchandising y piezas de ingeniería.",
+                companies: [],
+                synergy: "Diseñado para dar soporte a cualquier startup que asista a eventos internacionales en el Ágora, permitiéndoles imprimir merchandising 3D de su marca de forma rápida y económica."
+            }
+        };
+
+        let currentFloor = 'baja';
+
+        // 2. Control de Pestañas de Planta
+        function switchFloor(floor) {
+            currentFloor = floor;
+            const btnBaja = document.getElementById('btnPlantaBaja');
+            const btnPrimera = document.getElementById('btnPlantaPrimera');
+            const svgBaja = document.getElementById('svgPlantaBaja');
+            const svgPrimera = document.getElementById('svgPlantaPrimera');
+
+            if (floor === 'baja') {
+                btnBaja.className = "px-4 py-1.5 rounded-md text-xs font-medium transition bg-violet-600 text-white shadow";
+                btnPrimera.className = "px-4 py-1.5 rounded-md text-xs font-medium transition text-slate-400 hover:text-white";
+                svgBaja.classList.remove('hidden');
+                svgPrimera.classList.add('hidden');
+            } else {
+                btnPrimera.className = "px-4 py-1.5 rounded-md text-xs font-medium transition bg-violet-600 text-white shadow";
+                btnBaja.className = "px-4 py-1.5 rounded-md text-xs font-medium transition text-slate-400 hover:text-white";
+                svgPrimera.classList.remove('hidden');
+                svgBaja.classList.add('hidden');
+            }
+            clearActiveState();
+        }
+
+        // Limpiar selecciones previas
+        function clearActiveState() {
+            document.querySelectorAll('.map-space').forEach(space => {
+                space.classList.remove('active');
+            });
+            document.getElementById('infoDefault').classList.remove('hidden');
+            document.getElementById('infoContent').classList.add('hidden');
+        }
+
+        // 3. Selección interactiva de espacios
+        document.querySelectorAll('.map-space').forEach(space => {
+            space.addEventListener('click', (e) => {
+                clearActiveState();
+
+                // Activar el elemento seleccionado
+                const spaceId = e.target.id;
+                e.target.classList.add('active');
+
+                // Renderizar información en la barra lateral
+                showSpaceInfo(spaceId);
+            });
+        });
+
+        function showSpaceInfo(spaceId) {
+            const data = spacesData[spaceId];
+            if (!data) return;
+
+            document.getElementById('infoDefault').classList.add('hidden');
+            document.getElementById('infoContent').classList.remove('hidden');
+
+            // Actualizar etiquetas básicas
+            const tag = document.getElementById('infoFloorTag');
+            tag.innerText = data.floor.toUpperCase();
+            if (data.floor === "Planta Primera") {
+                tag.className = "text-[10px] bg-indigo-950 px-2.5 py-1 rounded-full text-indigo-300 font-semibold uppercase tracking-wider";
+            } else {
+                tag.className = "text-[10px] bg-emerald-950 px-2.5 py-1 rounded-full text-emerald-300 font-semibold uppercase tracking-wider";
+            }
+
+            document.getElementById('infoTitle').innerText = data.title;
+            document.getElementById('infoDesc').innerText = data.desc;
+            document.getElementById('infoSynergyText').innerText = data.synergy;
+
+            // Listar empresas
+            const listContainer = document.getElementById('infoCompaniesList');
+            listContainer.innerHTML = '';
+
+            if (data.companies.length === 0) {
+                listContainer.innerHTML = `<p class="text-xs text-slate-500 italic">No hay empresas asignadas temporalmente a este espacio común.</p>`;
+            } else {
+                data.companies.forEach(company => {
+                    const compEl = document.createElement('div');
+                    compEl.className = "bg-slate-900 border border-slate-800 p-3 rounded-lg flex flex-col gap-1 hover:border-violet-500/50 transition";
+                    compEl.innerHTML = `
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-sm text-slate-200">${company.name}</span>
+                            <span class="text-[9px] bg-slate-800 px-2 py-0.5 rounded text-violet-400 font-medium">${company.sector}</span>
+                        </div>
+                        <div class="flex flex-wrap gap-1 mt-1">
+                            ${company.tech.map(t => `<span class="text-[9px] bg-slate-950 px-1.5 py-0.5 rounded text-slate-400 border border-slate-800/80">${t}</span>`).join('')}
+                        </div>
+                    `;
+                    listContainer.appendChild(compEl);
+                });
+            }
+        }
+
+        // 4. Lógica de búsqueda predictiva
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+
+            // Eliminar resaltes previos
+            document.querySelectorAll('.map-space').forEach(space => {
+                space.classList.remove('highlighted');
+            });
+
+            if (query === '') return;
+
+            let spacesToHighlight = [];
+
+            // Buscar en los datos
+            for (const [spaceId, spaceInfo] of Object.entries(spacesData)) {
+                // Comprobar si coincide el nombre del espacio o descripción
+                let match = spaceInfo.title.toLowerCase().includes(query) ||
+                    spaceInfo.desc.toLowerCase().includes(query) ||
+                    spaceInfo.synergy.toLowerCase().includes(query);
+
+                // Comprobar si coincide con alguna tecnología o nombre de empresa
+                spaceInfo.companies.forEach(company => {
+                    if (company.name.toLowerCase().includes(query) ||
+                        company.sector.toLowerCase().includes(query) ||
+                        company.tech.some(t => t.toLowerCase().includes(query))) {
+                        match = true;
+                    }
+                });
+
+                if (match) {
+                    spacesToHighlight.push({ id: spaceId, floor: spaceInfo.floor });
+                }
+            }
+
+            // Aplicar efectos en los SVG
+            if (spacesToHighlight.length > 0) {
+                // Si encontramos un resultado, forzamos el cambio de pestaña de planta hacia el primer resultado
+                const targetFloor = spacesToHighlight[0].floor === "Planta Primera" ? 'primera' : 'baja';
+                if (targetFloor !== currentFloor) {
+                    switchFloor(targetFloor);
+                }
+
+                spacesToHighlight.forEach(item => {
+                    const el = document.getElementById(item.id);
+                    if (el) {
+                        el.classList.add('highlighted');
+                    }
+                });
+
+                // Cargar la información del primer espacio coincidente automáticamente
+                showSpaceInfo(spacesToHighlight[0].id);
+                // Activar visualmente también
+                const firstEl = document.getElementById(spacesToHighlight[0].id);
+                if (firstEl) firstEl.classList.add('active');
+            }
+        });
+    </script>
+</body>
+
+</html>

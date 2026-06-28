@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAPAPOLO — Directorio Inteligente del Polo de Contenidos Digitales</title>
+  <meta name="description" content="Mapa interactivo con IA para encontrar sinergias entre empresas del Polo Nacional de Contenidos Digitales de Málaga.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><rect width='36' height='36' rx='8' fill='url(%23g)'/><defs><linearGradient id='g' x1='0' y1='0' x2='36' y2='36'><stop stop-color='%23005cb9'/><stop offset='1' stop-color='%23f39200'/></linearGradient></defs><text x='18' y='26' font-size='20' font-weight='800' fill='white' text-anchor='middle'>P</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <div class="logo">P</div>
+      <div class="header-title">
+        <h1>MAPAPOLO</h1>
+        <p>Directorio Inteligente del Polo Digital</p>
+      </div>
+    </div>
+    <div class="header-center">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="Busca empresas, tecnologías o espacios... ej: &quot;estudio de audio para videojuegos&quot;" autocomplete="off">
+      <div class="search-results" id="searchResults"></div>
+    </div>
+    <div class="header-right">
+      <span class="header-badge">⚡ 2026</span>
+      <button class="theme-toggle" id="themeToggle" title="Modo oscuro/claro">🌙</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="map-section">
+      <div class="map-header">
+        <div>
+          <h2>🗺️ Mapa de Instalaciones</h2>
+          <p>Haz clic en cualquier zona del mapa para explorar empresas y sinergias</p>
+        </div>
+        <div class="floor-tabs">
+          <button class="floor-tab active" data-floor="baja">Planta Baja</button>
+          <button class="floor-tab" data-floor="primera">Planta Primera</button>
+        </div>
+      </div>
+
+      <div class="filters-bar" id="filtersBar">
+        <button class="filter-chip active" data-filter="all">Todas</button>
+        <button class="filter-chip" data-filter="videojuegos">🎮 Videojuegos</button>
+        <button class="filter-chip" data-filter="audiovisual">🎬 Audiovisual</button>
+        <button class="filter-chip" data-filter="xr">🥽 XR / VR</button>
+        <button class="filter-chip" data-filter="audio">🎵 Audio</button>
+        <button class="filter-chip" data-filter="ia">🤖 IA / Datos</button>
+        <button class="filter-chip" data-filter="3d">🖨️ 3D / Arte</button>
+      </div>
+
+      <div class="map-container">
+        <div class="map-inner">
+          <!-- PLANTA BAJA -->
+          <div class="map-floor active" data-floor="baja">
+            <svg viewBox="0 0 840 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <filter id="shadow1"><feDropShadow dx="0" dy="1" stdDeviation="2" flood-opacity="0.1"/></filter>
+                <filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f0f4f8"/><stop offset="100%" stop-color="#e8ecf2"/></linearGradient>
+              </defs>
+              <rect x="10" y="10" width="820" height="540" rx="12" fill="url(#bgGrad)" stroke="#d0d5dd" stroke-width="2"/>
+              <text x="30" y="38" font-size="11" font-weight="600" fill="#9ca3af" font-family="'Inter',sans-serif" text-anchor="start">EDIFICIO TABACALERA E3 · PLANTA BAJA</text>
+
+              <!-- Pasillo principal vertical -->
+              <rect x="310" y="50" width="60" height="470" rx="4" fill="#dce0e8" stroke="#c8cdd6" stroke-width="1"/>
+              <!-- Pasillo horizontal -->
+              <rect x="50" y="280" width="740" height="50" rx="4" fill="#dce0e8" stroke="#c8cdd6" stroke-width="1"/>
+
+              <!-- ZONAS INTERACTIVAS -->
+              <!-- Recepción -->
+              <g class="zone" data-space="recepcion" filter="url(#shadow1)">
+                <rect x="240" y="470" width="200" height="55" rx="8" fill="#e8f0fe" stroke="#005cb9" stroke-width="1.5"/>
+                <text class="zone-label-title" x="340" y="492" fill="#005cb9" font-size="11">Recepción</text>
+                <text class="zone-label" x="340" y="507" fill="#005cb9" font-size="8">Acceso Principal</text>
+              </g>
+
+              <!-- Ágora Eventos -->
+              <g class="zone" data-space="agora" filter="url(#shadow1)">
+                <rect x="110" y="60" width="180" height="200" rx="8" fill="#fff3e0" stroke="#f39200" stroke-width="1.5"/>
+                <text class="zone-label-title" x="200" y="145" fill="#c97d00" font-size="12">Ágora de Eventos</text>
+                <text class="zone-label" x="200" y="165" fill="#c97d00" font-size="8">Charlas, pitchs, esports</text>
+                <text class="zone-label" x="200" y="178" fill="#c97d00" font-size="7">200 m² · 120 personas</text>
+              </g>
+
+              <!-- Patio 1 -->
+              <g class="zone" data-space="patio-1">
+                <rect x="110" y="345" width="90" height="100" rx="8" fill="#e0f7e6" stroke="#10b981" stroke-width="1.5"/>
+                <text class="zone-label-title" x="155" y="385" fill="#059669" font-size="10">Patio 1</text>
+                <text class="zone-label" x="155" y="405" fill="#059669" font-size="8">Zona exterior</text>
+              </g>
+
+              <!-- Patio 2 -->
+              <g class="zone" data-space="patio-2">
+                <rect x="640" y="345" width="90" height="100" rx="8" fill="#e0f7e6" stroke="#10b981" stroke-width="1.5"/>
+                <text class="zone-label-title" x="685" y="385" fill="#059669" font-size="10">Patio 2</text>
+                <text class="zone-label" x="685" y="405" fill="#059669" font-size="8">Zona exterior</text>
+              </g>
+
+              <!-- Showroom -->
+              <g class="zone" data-space="showroom" filter="url(#shadow1)">
+                <rect x="460" y="60" width="180" height="200" rx="8" fill="#f0f0ff" stroke="#6366f1" stroke-width="1.5"/>
+                <text class="zone-label-title" x="550" y="145" fill="#4f46e5" font-size="11">Showroom</text>
+                <text class="zone-label" x="550" y="165" fill="#4f46e5" font-size="8">Exhibición de productos</text>
+                <text class="zone-label" x="550" y="178" fill="#4f46e5" font-size="7">Empresas del Polo</text>
+              </g>
+
+              <!-- Aula 1 -->
+              <g class="zone" data-space="aula-1" filter="url(#shadow1)">
+                <rect x="50" y="470" width="80" height="55" rx="6" fill="#fff3e0" stroke="#f39200" stroke-width="1"/>
+                <text class="zone-label-title" x="90" y="498" fill="#c97d00" font-size="8">Aula 1</text>
+              </g>
+
+              <!-- Aula 2 -->
+              <g class="zone" data-space="aula-2" filter="url(#shadow1)">
+                <rect x="140" y="470" width="80" height="55" rx="6" fill="#fff3e0" stroke="#f39200" stroke-width="1"/>
+                <text class="zone-label-title" x="180" y="498" fill="#c97d00" font-size="8">Aula 2</text>
+              </g>
+
+              <!-- Aula 3 (Gimnasio Escénico) -->
+              <g class="zone" data-space="aula-3" filter="url(#shadow1)">
+                <rect x="470" y="470" width="100" height="55" rx="6" fill="#fff3e0" stroke="#f39200" stroke-width="1"/>
+                <text class="zone-label-title" x="520" y="492" fill="#c97d00" font-size="8">Aula 3</text>
+                <text class="zone-label" x="520" y="507" fill="#c97d00" font-size="7">🎭 Gimnasio Escénico</text>
+              </g>
+
+              <!-- Promálaga (Málaga Film Office) -->
+              <g class="zone" data-space="promalaga" filter="url(#shadow1)">
+                <rect x="660" y="60" width="160" height="90" rx="6" fill="#e0f7f3" stroke="#00a88f" stroke-width="1.5"/>
+                <text class="zone-label-title" x="740" y="98" fill="#007a66" font-size="9">Promálaga</text>
+                <text class="zone-label" x="740" y="115" fill="#007a66" font-size="7">🎬 Málaga Film Office</text>
+              </g>
+
+              <!-- UMA -->
+              <g class="zone" data-space="uma" filter="url(#shadow1)">
+                <rect x="660" y="165" width="160" height="95" rx="6" fill="#e0f7f3" stroke="#00a88f" stroke-width="1.5"/>
+                <text class="zone-label-title" x="740" y="205" fill="#007a66" font-size="9">Espacio UMA</text>
+                <text class="zone-label" x="740" y="222" fill="#007a66" font-size="7">Universidad de Málaga</text>
+              </g>
+
+              <!-- Módulo 1 (Cooking&Publishing, Inone, Releevant) -->
+              <g class="zone" data-space="modulo-1" filter="url(#shadow1)">
+                <rect x="390" y="345" width="110" height="105" rx="8" fill="#f0f0ff" stroke="#6366f1" stroke-width="1.5"/>
+                <text class="zone-label-title" x="445" y="380" fill="#4f46e5" font-size="10">Módulo 1</text>
+                <text class="zone-label" x="445" y="398" fill="#4f46e5" font-size="7">🍳 Cooking & Publishing</text>
+                <text class="zone-label" x="445" y="412" fill="#4f46e5" font-size="7">🤖 Inone · Releevant</text>
+              </g>
+
+              <!-- Módulo 2 (Bebite, Heqate, Twindustry) -->
+              <g class="zone" data-space="modulo-2" filter="url(#shadow1)">
+                <rect x="520" y="345" width="110" height="105" rx="8" fill="#f0f0ff" stroke="#6366f1" stroke-width="1.5"/>
+                <text class="zone-label-title" x="575" y="380" fill="#4f46e5" font-size="10">Módulo 2</text>
+                <text class="zone-label" x="575" y="398" fill="#4f46e5" font-size="7">🔒 Bebite · 🎬 Heqate</text>
+                <text class="zone-label" x="575" y="412" fill="#4f46e5" font-size="7">🏭 Twindustry</text>
+              </g>
+            </svg>
+          </div>
+
+          <!-- PLANTA PRIMERA -->
+          <div class="map-floor" data-floor="primera">
+            <svg viewBox="0 0 840 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <filter id="shadow1"><feDropShadow dx="0" dy="1" stdDeviation="2" flood-opacity="0.1"/></filter>
+                <linearGradient id="bgGrad2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f0f4f8"/><stop offset="100%" stop-color="#e8ecf2"/></linearGradient>
+              </defs>
+              <rect x="10" y="10" width="820" height="540" rx="12" fill="url(#bgGrad2)" stroke="#d0d5dd" stroke-width="2"/>
+              <text x="30" y="38" font-size="11" font-weight="600" fill="#9ca3af" font-family="'Inter',sans-serif" text-anchor="start">EDIFICIO TABACALERA E3 · PLANTA PRIMERA</text>
+
+              <!-- Pasillo principal -->
+              <rect x="310" y="50" width="60" height="470" rx="4" fill="#dce0e8" stroke="#c8cdd6" stroke-width="1"/>
+              <rect x="50" y="300" width="740" height="50" rx="4" fill="#dce0e8" stroke="#c8cdd6" stroke-width="1"/>
+
+              <!-- Escaleras / Ascensor -->
+              <rect x="325" y="380" width="30" height="90" rx="4" fill="#e5e7eb" stroke="#c8cdd6" stroke-width="1"/>
+              <text x="340" y="430" fill="#9ca3af" font-size="7" text-anchor="middle" font-family="'Inter',sans-serif">⬆</text>
+
+              <!-- Coworking Go2Work (Ademass, Best Ride, CienciaVR, Eartes, Inakin, Krilloud, Murciélagos, Novelingo, Prosfy, Red Vel Games, Under the Bed) -->
+              <g class="zone" data-space="coworking" filter="url(#shadow1)">
+                <rect x="50" y="55" width="240" height="230" rx="10" fill="#fdf2f8" stroke="#ec4899" stroke-width="1.5"/>
+                <text class="zone-label-title" x="170" y="140" fill="#be185d" font-size="13">Go2Work Coworking</text>
+                <text class="zone-label" x="170" y="160" fill="#be185d" font-size="8">40 puestos · Alta rotación</text>
+                <text class="zone-label" x="170" y="175" fill="#be185d" font-size="7">11 startups en crecimiento</text>
+                <text class="zone-label" x="170" y="192" fill="#be185d" font-size="7">🎮🎵🕶️📱</text>
+              </g>
+
+              <!-- Despacho 3 (64Train, Forgotten Empires, Naolito) -->
+              <g class="zone" data-space="despacho-3" filter="url(#shadow1)">
+                <rect x="50" y="365" width="110" height="155" rx="8" fill="#f0f0ff" stroke="#6366f1" stroke-width="1.5"/>
+                <text class="zone-label-title" x="105" y="420" fill="#4f46e5" font-size="10">Despacho 3</text>
+                <text class="zone-label" x="105" y="438" fill="#4f46e5" font-size="7">🚂 64Train</text>
+                <text class="zone-label" x="105" y="452" fill="#4f46e5" font-size="7">⚔️ Forgotten Empires</text>
+                <text class="zone-label" x="105" y="466" fill="#4f46e5" font-size="7">🎨 Naolito</text>
+              </g>
+
+              <!-- Despacho 4 (Featlander, OWO Game) -->
+              <g class="zone" data-space="despacho-4" filter="url(#shadow1)">
+                <rect x="180" y="365" width="110" height="155" rx="8" fill="#f0f0ff" stroke="#6366f1" stroke-width="1.5"/>
+                <text class="zone-label-title" x="235" y="420" fill="#4f46e5" font-size="10">Despacho 4</text>
+                <text class="zone-label" x="235" y="438" fill="#4f46e5" font-size="7">🏔️ Featlander</text>
+                <text class="zone-label" x="235" y="452" fill="#4f46e5" font-size="7">🖐️ OWO Game</text>
+              </g>
+
+              <!-- Laboratorio VR & XR (Mickrea) -->
+              <g class="zone" data-space="lab-vr" filter="url(#shadow1)">
+                <rect x="390" y="55" width="190" height="230" rx="8" fill="#f3e8ff" stroke="#a855f7" stroke-width="1.5"/>
+                <text class="zone-label-title" x="485" y="145" fill="#7e22ce" font-size="11">Laboratorio VR & XR</text>
+                <text class="zone-label" x="485" y="165" fill="#7e22ce" font-size="8">Apple Vision Pro · Quest 3 · HoloLens</text>
+                <text class="zone-label" x="485" y="182" fill="#7e22ce" font-size="7">🕶️ Mickrea</text>
+              </g>
+
+              <!-- Estudio de Grabación (Tal Estudios) -->
+              <g class="zone" data-space="lab-audio" filter="url(#shadow1)">
+                <rect x="600" y="55" width="190" height="110" rx="8" fill="#f3e8ff" stroke="#a855f7" stroke-width="1.5"/>
+                <text class="zone-label-title" x="695" y="95" fill="#7e22ce" font-size="10">Estudio de Audio</text>
+                <text class="zone-label" x="695" y="115" fill="#7e22ce" font-size="8">Grabación · Mezcla · Foley</text>
+                <text class="zone-label" x="695" y="132" fill="#7e22ce" font-size="7">🎵 Tal Estudios</text>
+              </g>
+
+              <!-- Estudio de Vídeo -->
+              <g class="zone" data-space="lab-video" filter="url(#shadow1)">
+                <rect x="600" y="180" width="190" height="105" rx="8" fill="#f3e8ff" stroke="#a855f7" stroke-width="1.5"/>
+                <text class="zone-label-title" x="695" y="220" fill="#7e22ce" font-size="10">Estudio de Vídeo</text>
+                <text class="zone-label" x="695" y="240" fill="#7e22ce" font-size="8">Cámaras 8K · Croma · Iluminación</text>
+                <text class="zone-label" x="695" y="257" fill="#7e22ce" font-size="7">Disponible para todos</text>
+              </g>
+
+              <!-- Laboratorio Impresión 3D (Pablo Becerra) -->
+              <g class="zone" data-space="lab-3d" filter="url(#shadow1)">
+                <rect x="390" y="365" width="400" height="155" rx="10" fill="#f3e8ff" stroke="#a855f7" stroke-width="1.5"/>
+                <text class="zone-label-title" x="590" y="420" fill="#7e22ce" font-size="13">Lab. Impresión 3D</text>
+                <text class="zone-label" x="590" y="440" fill="#7e22ce" font-size="8">20 impresoras FDM + Resina · Escáner 3D · Cortadora láser</text>
+                <text class="zone-label" x="590" y="458" fill="#7e22ce" font-size="7">🗿 Pablo Becerra · Prototipado para startups</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="sidebar">
+      <div class="info-card">
+        <div class="info-default" id="infoDefault">
+          <div class="icon">📍</div>
+          <h3>Selecciona una zona</h3>
+          <p>Haz clic en cualquier espacio del mapa o usa el buscador para descubrir empresas, tecnologías y sinergias.</p>
+        </div>
+
+        <div class="info-content" id="infoContent">
+          <span class="info-tag" id="infoTag">Planta Baja · Común</span>
+          <h3 class="info-title" id="infoTitle">Nombre del Espacio</h3>
+          <p class="info-desc" id="infoDesc">Descripción del espacio.</p>
+          <hr class="info-divider">
+          <div class="info-section-title">Empresas en esta zona</div>
+          <div class="company-list" id="companyList"></div>
+          <hr class="info-divider">
+          <div class="synergy-container" id="synergyContainer"></div>
+          <div id="rutaContainer"></div>
+        </div>
+      </div>
+
+      <div class="featured-bar">
+        <h4>⚡ Empresas destacadas</h4>
+        <div class="featured-list" id="featuredList"></div>
+      </div>
+    </aside>
+  </main>
+
+  <script src="js/datos.js"></script>
+  <script src="js/buscador.js"></script>
+  <script src="js/mapa.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
