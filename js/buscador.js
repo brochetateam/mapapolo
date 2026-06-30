@@ -1,314 +1,216 @@
-// ============================================================
-// MAPAPOLO — Motor de Búsqueda Semántica Simulada
-// Sistema de scoring contextual sin servidor
-// ============================================================
+/* ============================================================
+   MAPAPOLO 2026 · Buscador semántico (simulado)
+   ------------------------------------------------------------
+   Motor de scoring ponderado que entiende queries en lenguaje
+   natural: "busco estudio de audio para doblaje de videojuego"
+   o "necesito animación 3D para una serie infantil".
+   ============================================================ */
 
-const Buscador = (() => {
+window.MAPAPOLO_BUSCADOR = (function () {
+  "use strict";
 
-  // Diccionario de sinónimos y relaciones semánticas
-  const sinonimos = {
-    // Audio / Sonido
-    "audio": ["sonido", "grabación", "grabar", "mezcla", "doblaje", "locución", "voz", "banda sonora", "efectos", "foley", "podcast", "música"],
-    "sonido": ["audio", "grabación", "mezcla", "doblaje", "efectos"],
-    "doblaje": ["audio", "voz", "grabación", "locución"],
-    "podcast": ["audio", "grabación", "locución"],
+  const DATA = window.MAPAPOLO_DATA;
+  if (!DATA) {
+    console.error("[MAPAPOLO] datos.js no está cargado.");
+    return {};
+  }
 
-    // Videojuegos
-    "videojuegos": ["juego", "gaming", "gameplay", "indie", "mobile", "consola", "pc"],
-    "juego": ["videojuegos", "gaming", "gameplay"],
-    "gaming": ["videojuegos", "esports", "competición"],
-
-    // VR / AR / XR
-    "vr": ["realidad virtual", "virtual", "inmersivo", "headset", "quest", "vision pro"],
-    "realidad virtual": ["vr", "inmersivo", "xr", "metaverso"],
-    "ar": ["realidad aumentada", "augmented", "hololens"],
-    "realidad aumentada": ["ar", "augmented"],
-    "xr": ["realidad mixta", "realidad extendida", "vr", "ar", "mixed reality"],
-    "metaverso": ["vr", "virtual", "mundo virtual", "spatial"],
-
-    // IA
-    "ia": ["inteligencia artificial", "ai", "machine learning", "ml", "deep learning", "neural", "llm"],
-    "inteligencia artificial": ["ia", "ai", "machine learning", "deep learning"],
-    "machine learning": ["ia", "ml", "deep learning"],
-    "llm": ["ia", "gpt", "lenguaje", "nlp", "modelo"],
-
-    // 3D / Modelado
-    "3d": ["tres dimensiones", "modelado", "modelos", "personajes", "assets", "blender", "maya", "zbrush"],
-    "modelado": ["3d", "modelos", "personajes", "assets"],
-    "personajes": ["3d", "modelado", "character design", "concept art"],
-    "impresion 3d": ["3d", "impresora", "prototipo", "prototipado", "fdm", "resina"],
-
-    // Animación
-    "animacion": ["animar", "motion", "2d", "after effects", "ilustración"],
-    "motion": ["animacion", "motion graphics", "after effects"],
-    "ilustracion": ["animacion", "dibujo", "arte digital", "concept art"],
-
-    // Audiovisual
-    "audiovisual": ["cine", "video", "film", "rodaje", "producción"],
-    "cine": ["audiovisual", "film", "rodaje", "pelicula"],
-    "video": ["audiovisual", "film", "grabación"],
-    "vfx": ["efectos visuales", "postproducción", "compositing"],
-
-    // Simulación
-    "simulacion": ["simulador", "simular", "training", "formación"],
-    "simulador": ["simulacion", "simular"],
-
-    // Ciberseguridad
-    "ciberseguridad": ["seguridad", "hacking", "penetration", "auditoría", "blockchain"],
-    "seguridad": ["ciberseguridad", "protección"],
-
-    // Narrativa
-    "narrativa": ["historia", "storytelling", "guion", "escritura"],
-    "storytelling": ["narrativa", "historia"],
-
-    // Marketing
-    "marketing": ["comunity", "social media", "digital", "analytics", "seo"],
-    "social media": ["marketing", "community"],
-
-    // Hardware
-    "hardware": ["dispositivo", "gadget", "wearable", "háptico"],
-    "wearable": ["hardware", "dispositivo", "háptico"],
-
-    // Educación
-    "educacion": ["formación", "curso", "enseñanza", "aprendizaje", "aula"],
-    "formacion": ["educacion", "curso", "taller"],
-
-    // Industria
-    "industria": ["industrial", "industria 4.0", "iot", "digital twin", "gemelo digital"],
-    "iot": ["industria", "internet of things", "sensores"],
-
-    // Arte
-    "arte": ["artístico", "creativo", "concept art", "diseño"],
-    "diseno": ["diseño", "gráfico", "visual", "ux", "ui"]
+  /* ---------- STEMMING + SINÓNIMOS (español) ---------- */
+  const STEMS = {
+    "busco": "buscar", "buscas": "buscar", "buscamos": "buscar",
+    "necesito": "necesitar", "necesita": "necesitar", "necesitamos": "necesitar",
+    "tengo": "tener", "tenemos": "tener",
+    "hago": "hacer", "hacemos": "hacer",
+    "videojuego": "juego", "videojuegos": "juego", "juego": "juego", "juegos": "juego",
+    "realidad": "vr", "virtual": "vr",
+    "aumentada": "ar",
+    "mixta": "mr",
+    "inteligencia": "ia", "artificial": "ia",
+    "audio": "sonido", "sonido": "sonido", "musica": "sonido", "musical": "sonido",
+    "sonora": "sonido", "sonorizacion": "sonido",
+    "doblaje": "voz", "locucion": "voz", "voz": "voz", "voces": "voz",
+    "animacion": "animar", "animar": "animar", "animo": "animar",
+    "3d": "tresd", "tridimensional": "tresd",
+    "2d": "dosd", "bidimensional": "dosd",
+    "imagen": "imagen", "imagenes": "imagen",
+    "render": "renderizar", "renderizado": "renderizar", "renderizar": "renderizar",
+    "diseno": "disenar", "diseño": "disenar", "disenar": "disenar",
+    "publicidad": "marketing", "marketing": "marketing",
+    "formacion": "educar", "educacion": "educar", "educar": "educar",
+    "taller": "formar", "curso": "formar",
+    "modelado": "modelar", "modelado3d": "modelar", "modelar": "modelar",
+    "postproduccion": "post", "post": "post", "efectos": "post", "vfx": "post",
+    "cine": "audiovisual", "pelicula": "audiovisual", "serie": "audiovisual",
+    "docencia": "educar", "ensenanza": "educar",
+    "evento": "evento", "eventos": "evento", "feria": "evento",
+    "live": "directo", "directo": "directo", "streaming": "directo",
+    "podcast": "audio", "musica": "sonido"
   };
 
-  // Tokenización y normalización
-  function tokenize(text) {
-    return text
+  /* Palabras vacías que no aportan señal */
+  const STOP = new Set([
+    "el","la","los","las","un","una","unos","unas","y","o","u","de","del","al",
+    "en","por","para","con","sin","a","que","qué","cual","cuál","cuales","cuáles",
+    "se","me","te","le","nos","os","les","lo","mi","tu","su","nuestro","vuestro",
+    "este","esta","estos","estas","ese","esa","esos","esas","aquel","aquella",
+    "del","al","del","del","del","del","del","del","del","del","del","del","del",
+    "tengo","tienes","tiene","tenemos","tienen","tener",
+    "hay","puede","puedo","pueden","ser","estar","estoy","estas","esta",
+    "como","cómo","donde","dónde","cuando","cuándo","porque","por","qué"
+  ]);
+
+  /* ---------- TOKENIZACIÓN ---------- */
+  function normalize(s) {
+    return (s || "")
       .toLowerCase()
-      .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Quitar acentos
-      .replace(/[^a-z0-9\s]/g, " ")
-      .split(/\s+/)
-      .filter(w => w.length > 2);
+      .normalize("NFD").replace(/[\u0300-\u0303\u0305-\u036f]/g, "") // quitar diacríticos excepto tilde de la ñ
+      .replace(/ñ/g, "n")
+      .replace(/[¿?¡!(){}[\].,;:¡"']/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
   }
 
-  // Expandir tokens con sinónimos
-  function expandTokens(tokens) {
-    const expanded = new Set(tokens);
-    for (const token of tokens) {
-      for (const [key, syns] of Object.entries(sinonimos)) {
-        if (key === token || syns.includes(token)) {
-          expanded.add(key);
-          syns.forEach(s => expanded.add(s));
-        }
-      }
-    }
-    return [...expanded];
+  function tokenize(s) {
+    const norm = normalize(s);
+    const tokens = norm.split(" ").filter(function (t) {
+      return t.length > 1 && !STOP.has(t);
+    });
+    return tokens.map(function (t) {
+      return STEMS[t] || t;
+    });
   }
 
-  // Calcular score de coincidencia para una empresa
-  function scoreEmpresa(empresa, tokensExpandidos, queryOriginal) {
+  /* ---------- SCORING ---------- */
+  function scoreEmpresa(empresa, tokens) {
+    if (!tokens.length) return 0;
+    const fields = [
+      { text: (empresa.nombre || "").toLowerCase(),   weight: 4 },
+      { text: (empresa.sector || "").toLowerCase(),  weight: 3 },
+      { text: (empresa.desc || "").toLowerCase(),     weight: 2 },
+      { text: (empresa.tech || []).join(" ").toLowerCase(), weight: 3 },
+      { text: (DATA.tagsByEmpresa[empresa.id] || []).join(" ").toLowerCase(), weight: 3 }
+    ];
+    const textHaystack = fields.map(function (f) {
+      return f.text;
+    }).join(" \u2022 ");
+
     let score = 0;
-    const queryLower = queryOriginal.toLowerCase();
-
-    // 1. Coincidencia en nombre (peso x4)
-    const nombreLower = empresa.nombre.toLowerCase();
-    if (nombreLower.includes(queryLower)) score += 40;
-    tokensExpandidos.forEach(t => {
-      if (nombreLower.includes(t)) score += 20;
+    let matched = 0;
+    tokens.forEach(function (tk) {
+      let tokenHit = 0;
+      fields.forEach(function (f) {
+        if (f.text.indexOf(tk) !== -1) {
+          // Bonus si la palabra está en el nombre
+          let bonus = 1;
+          if (f === fields[0] && f.text.indexOf(tk) !== -1) bonus = 2.5;
+          if (f === fields[1] && f.text.indexOf(tk) !== -1) bonus = 2;
+          score += f.weight * bonus;
+          tokenHit += 1;
+        }
+      });
+      if (tokenHit > 0) {
+        matched += 1;
+        // Bonus por cobertura total de tokens
+        score += 1.5;
+      } else {
+        // Penalizar tokens no encontrados
+        score -= 0.5;
+      }
     });
 
-    // 2. Coincidencia en sector (peso x3)
-    const sectorLower = empresa.sector.toLowerCase();
-    tokensExpandidos.forEach(t => {
-      if (sectorLower.includes(t)) score += 15;
-    });
+    // Normalizar por nº de tokens (cobertura)
+    const cobertura = matched / tokens.length;
+    return score * (0.5 + 0.5 * cobertura);
+  }
 
-    // 3. Coincidencia en tecnologías (peso x3)
-    empresa.tecnologias.forEach(tech => {
-      const techLower = tech.toLowerCase();
-      tokensExpandidos.forEach(t => {
-        if (techLower.includes(t)) score += 12;
+  /* ---------- BÚSQUEDA PRINCIPAL ---------- */
+  function buscar(query, limit) {
+    limit = limit || 8;
+    const tokens = tokenize(query);
+    if (!tokens.length) return [];
+
+    const scored = DATA.empresas
+      .map(function (e) {
+        return { empresa: e, score: scoreEmpresa(e, tokens) };
+      })
+      .filter(function (r) { return r.score > 0; })
+      .sort(function (a, b) { return b.score - a.score; })
+      .slice(0, limit);
+
+    return scored.map(function (r) {
+      return Object.assign({}, r.empresa, { _score: Math.round(r.score) });
+    });
+  }
+
+  /* ---------- SINERGIAS: ¿qué empresas encajan con una dada? ---------- */
+  function emparejarSinergias(empresaId, limit) {
+    limit = limit || 3;
+    const origen = DATA.getEmpresaById(empresaId);
+    if (!origen) return [];
+
+    const tokensOrigen = tokenize(origen.nombre + " " + origen.sector + " " + origen.desc + " " + origen.tech.join(" "));
+
+    const ranked = DATA.empresas
+      .filter(function (e) { return e.id !== empresaId; })
+      .map(function (e) {
+        const tokensE = tokenize(e.nombre + " " + e.sector + " " + e.desc + " " + e.tech.join(" "));
+        // Intersección + afinidad
+        let common = 0;
+        const setOrig = new Set(tokensOrigen);
+        tokensE.forEach(function (t) { if (setOrig.has(t)) common += 1; });
+        // Compartir tags
+        const tagsOrig = DATA.tagsByEmpresa[empresaId] || [];
+        const tagsE = DATA.tagsByEmpresa[e.id] || [];
+        const tagCommon = tagsOrig.filter(function (t) { return tagsE.indexOf(t) !== -1; }).length;
+        // Cercanía física (mismo edificio) — en este MVP solo planta baja
+        const mismaZona = origen.zonas.some(function (z) { return e.zonas.indexOf(z) !== -1; });
+        // Score final
+        let score = 30 + common * 4 + tagCommon * 18 + (mismaZona ? 12 : 0);
+        return { empresa: e, score: score, common: common + tagCommon, mismaZona: mismaZona };
+      })
+      .filter(function (r) { return r.score > 0; })
+      .sort(function (a, b) { return b.score - a.score; })
+      .slice(0, limit);
+
+    return ranked.map(function (r) {
+      const e = r.empresa;
+      const tagsOrig = DATA.tagsByEmpresa[empresaId] || [];
+      const tagsE = DATA.tagsByEmpresa[e.id] || [];
+      const shared = tagsE.filter(function (t) { return tagsOrig.indexOf(t) !== -1; });
+      const razon = (function () {
+        if (r.mismaZona && shared.length) {
+          return "Comparte zona en la planta y tecnologías: " + shared.slice(0, 3).join(", ") + ".";
+        } else if (r.mismaZona) {
+          return "Misma zona en planta baja: oportunidad de colaboración presencial.";
+        } else if (shared.length) {
+          return "Tecnologías y sector afines: " + shared.slice(0, 3).join(", ") + ".";
+        }
+        return "Ambos pertenecen al ecosistema digital del Polo.";
+      })();
+      return Object.assign({}, e, {
+        _score: Math.min(99, Math.round(r.score)),
+        _razon: razon,
+        _match: shared.slice(0, 4)
       });
     });
-
-    // 4. Coincidencia en descripción (peso x2)
-    const descLower = empresa.descripcion.toLowerCase();
-    tokensExpandidos.forEach(t => {
-      if (descLower.includes(t)) score += 6;
-    });
-
-    // 5. Bonus por múltiples coincidencias
-    const coincidencias = tokensExpandidos.filter(t =>
-      nombreLower.includes(t) ||
-      sectorLower.includes(t) ||
-      empresa.tecnologias.some(tech => tech.toLowerCase().includes(t)) ||
-      descLower.includes(t)
-    );
-    if (coincidencias.length >= 3) score += 15;
-    if (coincidencias.length >= 5) score += 10;
-
-    return Math.min(score, 100);
   }
 
-  // Calcular score para espacios
-  function scoreEspacio(espacio, tokensExpandidos, queryOriginal) {
-    let score = 0;
-    const queryLower = queryOriginal.toLowerCase();
+  /* ---------- SUGERENCIAS RÁPIDAS ---------- */
+  const SUGERENCIAS = [
+    "estudio de audio",
+    "animación 3D",
+    "videojuegos Unity",
+    "realidad virtual XR",
+    "inteligencia artificial",
+    "producción audiovisual"
+  ];
 
-    // Coincidencia en nombre
-    if (espacio.titulo.toLowerCase().includes(queryLower)) score += 30;
-    tokensExpandidos.forEach(t => {
-      if (espacio.titulo.toLowerCase().includes(t)) score += 15;
-    });
-
-    // Coincidencia en tipo
-    tokensExpandidos.forEach(t => {
-      if (espacio.tipo.includes(t)) score += 10;
-    });
-
-    // Coincidencia en descripción
-    tokensExpandidos.forEach(t => {
-      if (espacio.descripcion.toLowerCase().includes(t)) score += 5;
-    });
-
-    // Bonus por empresas en el espacio
-    if (espacio.empresas.length > 0) score += 5;
-
-    return Math.min(score, 100);
-  }
-
-  // Buscar empresas
-  function buscarEmpresas(query) {
-    if (!query || query.trim().length < 2) return [];
-
-    const tokens = tokenize(query);
-    const tokensExp = expandTokens(tokens);
-
-    const resultados = EMPRESAS.map(empresa => ({
-      tipo: "empresa",
-      item: empresa,
-      score: scoreEmpresa(empresa, tokensExp, query)
-    }))
-    .filter(r => r.score > 8)
-    .sort((a, b) => b.score - a.score);
-
-    return resultados;
-  }
-
-  // Buscar espacios
-  function buscarEspacios(query) {
-    if (!query || query.trim().length < 2) return [];
-
-    const tokens = tokenize(query);
-    const tokensExp = expandTokens(tokens);
-
-    const resultados = Object.entries(ESPACIOS).map(([id, espacio]) => ({
-      tipo: "espacio",
-      id: id,
-      item: espacio,
-      score: scoreEspacio(espacio, tokensExp, query)
-    }))
-    .filter(r => r.score > 8)
-    .sort((a, b) => b.score - a.score);
-
-    return resultados;
-  }
-
-  // Buscar todo (empresas + espacios)
-  function buscar(query) {
-    const empresas = buscarEmpresas(query);
-    const espacios = buscarEspacios(query);
-
-    // Combinar y ordenar
-    const todos = [...empresas, ...espacios]
-      .sort((a, b) => b.score - a.score);
-
-    return todos;
-  }
-
-  // Encontrar sinergias para una empresa
-  function encontrarSinergias(empresaId) {
-    const empresa = EMPRESAS.find(e => e.id === empresaId);
-    if (!empresa) return [];
-
-    const sinergias = [];
-
-    // 1. Sinergias predefinidas
-    SINERGIAS_PREDEFINIDAS.forEach(s => {
-      if (s.empresa1 === empresaId || s.empresa2 === empresaId) {
-        const otraId = s.empresa1 === empresaId ? s.empresa2 : s.empresa1;
-        const otraEmpresa = EMPRESAS.find(e => e.id === otraId);
-        if (otraEmpresa) {
-          sinergias.push({
-            empresa: otraEmpresa,
-            razon: s.razon,
-            tipo: s.tipo,
-            score: s.score,
-            fuente: "predefinida"
-          });
-        }
-      }
-    });
-
-    // 2. Sinergias calculadas por tecnología
-    EMPRESAS.forEach(otra => {
-      if (otra.id === empresaId) return;
-
-      // Calcular overlap de tecnologías
-      const techsComunes = empresa.tecnologias.filter(t1 =>
-        otra.tecnologias.some(t2 => {
-          const t1l = t1.toLowerCase();
-          const t2l = t2.toLowerCase();
-          return t1l === t2l ||
-                 t1l.includes(t2l) ||
-                 t2l.includes(t1l) ||
-                 sinonimos[t1l]?.some(s => t2l.includes(s)) ||
-                 sinonimos[t2l]?.some(s => t1l.includes(s));
-        })
-      );
-
-      if (techsComunes.length >= 1) {
-        // Verificar que no esté ya en sinergias predefinidas
-        const yaExiste = sinergias.some(s => s.empresa.id === otra.id);
-        if (!yaExiste) {
-          const score = 50 + (techsComunes.length * 15);
-          sinergias.push({
-            empresa: otra,
-            razon: `Comparten tecnologías: ${techsComunes.join(", ")}. Potencial de colaboración técnica.`,
-            tipo: "tecnológica",
-            score: Math.min(score, 95),
-            fuente: "calculada"
-          });
-        }
-      }
-    });
-
-    // Ordenar por score
-    return sinergias.sort((a, b) => b.score - a.score).slice(0, 5);
-  }
-
-  // Buscar por categoría predefinida
-  function buscarPorCategoria(categoria) {
-    const ids = CATEGORIAS[categoria.toLowerCase()];
-    if (!ids) return [];
-
-    return ids.map(id => {
-      const empresa = EMPRESAS.find(e => e.id === id);
-      const espacio = ESPACIOS[id];
-      if (empresa) return { tipo: "empresa", item: empresa, score: 90 };
-      if (espacio) return { tipo: "espacio", id: id, item: espacio, score: 90 };
-      return null;
-    }).filter(Boolean);
-  }
-
-  // API pública
+  /* ---------- API pública ---------- */
   return {
-    buscar,
-    buscarEmpresas,
-    buscarEspacios,
-    encontrarSinergias,
-    buscarPorCategoria
+    buscar: buscar,
+    emparejarSinergias: emparejarSinergias,
+    sugerencias: SUGERENCIAS,
+    tokenize: tokenize,
+    score: scoreEmpresa
   };
-
 })();

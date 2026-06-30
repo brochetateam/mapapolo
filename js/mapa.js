@@ -1,171 +1,254 @@
-// ============================================================
-// MAPAPOLO — Motor de Mapa Interactivo
-// Control del SVG, selección, resaltado, rutas
-// ============================================================
+/* ============================================================
+   MAPAPOLO 2026 · Controlador del mapa SVG
+   ------------------------------------------------------------
+   Carga el SVG real de la planta baja, hace clicables sus
+   zonas según los IDs definidos en datos.js, y pinta las
+   líneas de sinergia.
+   ============================================================ */
 
-const Mapa = (() => {
+window.MAPAPOLO_MAPA = (function () {
+  "use strict";
 
-  let plantaActual = "baja";
-  let zonaActiva = null;
-  let zonasResaltadas = [];
+  const DATA = window.MAPAPOLO_DATA;
+  const SVG_URL = "mapas/plano_polo_planta_baja.svg";
+  const SVG_URL_FALLBACK = "../Plano POLO Planta Baja/plano_polo_planta_baja.svg";
 
-  // Colores de zona por defecto
-  const colores = {
-    "recepcion": { fill: "#dbeafe", stroke: "#3b82f6" },
-    "agora": { fill: "#fef3c7", stroke: "#f59e0b" },
-    "patio1": { fill: "#d1fae5", stroke: "#10b981" },
-    "patio2": { fill: "#d1fae5", stroke: "#10b981" },
-    "showroom": { fill: "#fef9c3", stroke: "#eab308" },
-    "aula1": { fill: "#ede9fe", stroke: "#8b5cf6" },
-    "aula2": { fill: "#ede9fe", stroke: "#8b5cf6" },
-    "aula3": { fill: "#ede9fe", stroke: "#8b5cf6" },
-    "aula4": { fill: "#ede9fe", stroke: "#8b5cf6" },
-    "aula5": { fill: "#ede9fe", stroke: "#8b5cf6" },
-    "aula6": { fill: "#ede9fe", stroke: "#8b5cf6" },
-    "modulo1": { fill: "#1e293b", stroke: "#475569" },
-    "modulo2": { fill: "#1e293b", stroke: "#475569" },
-    "coworking": { fill: "#dbeafe", stroke: "#3b82f6" },
-    "lab-vr": { fill: "#f5f3ff", stroke: "#8b5cf6" },
-    "lab-audio": { fill: "#f0fdfa", stroke: "#14b8a6" },
-    "lab-3d": { fill: "#fff7ed", stroke: "#ea580c" },
-    "lab-video": { fill: "#fef2f2", stroke: "#ef4444" },
-    "despacho3": { fill: "#1e293b", stroke: "#475569" },
-    "despacho4": { fill: "#1e293b", stroke: "#475569" },
-    "despacho5": { fill: "#1e293b", stroke: "#475569" },
-    "recepcion2": { fill: "#dbeafe", stroke: "#3b82f6" }
+  const state = {
+    zonasData: {},
+    activeSpace: null,
+    highlightZones: new Set(),
+    onSelect: null,
+    onHover: null
   };
 
-  // Inicializar mapa
-  function init() {
-    // Asignar eventos de clic a todas las zonas
-    document.querySelectorAll(".zone").forEach(zone => {
-      zone.addEventListener("click", () => {
-        const spaceId = zone.dataset.space;
-        const spaceName = zone.dataset.name;
-        seleccionarZona(spaceId, spaceName);
-      });
-
-      // Hover effect con tooltip
-      zone.addEventListener("mouseenter", () => {
-        const name = zone.dataset.name;
-        if (name) zone.style.cursor = "pointer";
-      });
-    });
-
-    // Selector de planta
-    document.getElementById("btnBaja")?.addEventListener("click", () => cambiarPlanta("baja"));
-    document.getElementById("btnPrimera")?.addEventListener("click", () => cambiarPlanta("primera"));
-  }
-
-  // Cambiar planta
-  function cambiarPlanta(planta) {
-    plantaActual = planta;
-
-    const svgBaja = document.getElementById("svgBaja");
-    const svgPrimera = document.getElementById("svgPrimera");
-    const btnBaja = document.getElementById("btnBaja");
-    const btnPrimera = document.getElementById("btnPrimera");
-
-    if (planta === "baja") {
-      svgBaja?.classList.remove("hidden");
-      svgPrimera?.classList.add("hidden");
-      btnBaja?.classList.add("active");
-      btnPrimera?.classList.remove("active");
-    } else {
-      svgPrimera?.classList.remove("hidden");
-      svgBaja?.classList.add("hidden");
-      btnPrimera?.classList.add("active");
-      btnBaja?.classList.remove("active");
+  /* ---------- LOAD ---------- */
+  async function load(svgHost) {
+    let raw;
+    try {
+      const r = await fetch(SVG_URL);
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      raw = await r.text();
+    } catch (e1) {
+      try {
+        const r2 = await fetch(SVG_URL_FALLBACK);
+        if (!r2.ok) throw new Error("HTTP " + r2.status);
+        raw = await r2.text();
+      } catch (e2) {
+        console.error("[MAPAPOLO] No se pudo cargar el SVG:", e1, e2);
+        svgHost.innerHTML = '<div style="padding:24px;color:#c7cbe0;text-align:center;">No se pudo cargar el plano.<br><small>Revisa la ruta mapas/plano_polo_planta_baja.svg</small></div>';
+        return false;
+      }
     }
 
-    // Limpiar selección al cambiar de planta
-    limpiarSeleccion();
-  }
+    svgHost.innerHTML = raw;
+    const svg = svgHost.querySelector("svg");
+    if (!svg) return false;
 
-  // Seleccionar zona
-  function seleccionarZona(spaceId, spaceName) {
-    // Limpiar selección previa
-    limpiarSeleccion();
+    // Ajustes de tamaño y estilo
+    svg.removeAttribute("width");
+    svg.removeAttribute("height");
+    svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
 
-    // Activar nueva zona
-    zonaActiva = spaceId;
-
-    // Buscar todas las zonas con el mismo spaceId en la planta actual
-    const selectorPlanta = plantaActual === "baja" ? "#svgBaja" : "#svgPrimera";
-    document.querySelectorAll(`${selectorPlanta} .zone`).forEach(z => {
-      if (z.dataset.space === spaceId) {
-        z.classList.add("active");
+    // Hacer interactivos los grupos cuyo id esté en zonas
+    Object.keys(DATA.zonas).forEach(function (id) {
+      const g = svg.querySelector("#" + CSS.escape(id));
+      if (g) {
+        g.setAttribute("data-space", id);
+        // Cursor pointer
+        g.style.cursor = "pointer";
+        // Quitar pointer-events de textos internos
+        g.querySelectorAll("text").forEach(function (t) { t.style.pointerEvents = "none"; });
+        g.addEventListener("click", function (ev) { handleClick(id, ev); });
+        g.addEventListener("mouseenter", function (ev) { handleEnter(id, ev); });
+        g.addEventListener("mouseleave", function (ev) { handleLeave(id, ev); });
+        state.zonasData[id] = g;
       }
     });
 
-    // Disparar evento para que app.js actualice el panel
-    window.dispatchEvent(new CustomEvent("zonaSeleccionada", {
-      detail: { spaceId, spaceName, planta: plantaActual }
-    }));
+    // Limpiar outlines feos en SVG
+    svg.style.outline = "none";
+
+    return true;
   }
 
-  // Resaltar zonas (por búsqueda)
-  function resaltarZonas(spaceIds) {
-    limpiarResaltado();
-    zonasResaltadas = spaceIds;
+  /* ---------- HANDLERS ---------- */
+  function handleClick(id, ev) {
+    ev.stopPropagation();
+    if (state.onSelect) state.onSelect(id);
+  }
 
-    spaceIds.forEach(id => {
-      document.querySelectorAll(`.zone[data-space="${id}"]`).forEach(z => {
-        z.classList.add("highlighted");
-      });
+  function handleEnter(id, ev) {
+    if (state.onHover) state.onHover(id, ev);
+  }
+
+  function handleLeave(id, ev) {
+    if (state.onHover) state.onHover(null, ev);
+  }
+
+  /* ---------- HIGHLIGHT / ACTIVE ---------- */
+  function setActive(id) {
+    Object.keys(state.zonasData).forEach(function (k) {
+      const el = state.zonasData[k];
+      el.classList.remove("is-active");
     });
-  }
-
-  // Limpiar selección
-  function limpiarSeleccion() {
-    zonaActiva = null;
-    document.querySelectorAll(".zone.active").forEach(z => {
-      z.classList.remove("active");
-    });
-  }
-
-  // Limpiar resaltado
-  function limpiarResaltado() {
-    zonasResaltadas = [];
-    document.querySelectorAll(".zone.highlighted").forEach(z => {
-      z.classList.remove("highlighted");
-    });
-  }
-
-  // Obtener zona activa
-  function getZonaActiva() {
-    return zonaActiva;
-  }
-
-  // Obtener planta actual
-  function getPlantaActual() {
-    return plantaActual;
-  }
-
-  // Navegar a una empresa específica
-  function navegarAEmpresa(empresaId) {
-    const empresa = EMPRESAS.find(e => e.id === empresaId);
-    if (!empresa) return;
-
-    // Cambiar a la planta correcta
-    if (empresa.planta !== plantaActual) {
-      cambiarPlanta(empresa.planta);
+    state.activeSpace = id;
+    if (id && state.zonasData[id]) {
+      state.zonasData[id].classList.add("is-active");
     }
-
-    // Seleccionar la zona
-    seleccionarZona(empresa.zona, empresa.nombre);
   }
 
-  return {
-    init,
-    cambiarPlanta,
-    seleccionarZona,
-    resaltarZonas,
-    limpiarSeleccion,
-    limpiarResaltado,
-    getZonaActiva,
-    getPlantaActual,
-    navegarAEmpresa
-  };
+  function highlight(ids) {
+    Object.keys(state.zonasData).forEach(function (k) {
+      const el = state.zonasData[k];
+      el.classList.remove("is-highlight", "is-dim");
+    });
+    if (!ids) return;
+    const set = new Set(ids);
+    Object.keys(state.zonasData).forEach(function (k) {
+      if (set.has(k)) state.zonasData[k].classList.add("is-highlight");
+      else state.zonasData[k].classList.add("is-dim");
+    });
+  }
 
+  function clearHighlight() {
+    Object.keys(state.zonasData).forEach(function (k) {
+      state.zonasData[k].classList.remove("is-highlight", "is-dim");
+    });
+  }
+
+  /* ---------- SINERGY LINES ---------- */
+  function getZonaCentroid(zoneId) {
+    const el = state.zonasData[zoneId];
+    if (!el) return null;
+    const svg = el.ownerSVGElement;
+    if (!svg) return null;
+    const b = el.getBBox();
+    return { x: b.x + b.width / 2, y: b.y + b.height / 2, w: b.width, h: b.height };
+  }
+
+  function getZonaCenters(zonaIds) {
+    return zonaIds.map(function (id) {
+      return getZonaCentroid(id);
+    }).filter(Boolean);
+  }
+
+  function drawSynergyLines(pairs) {
+    const layer = document.getElementById("synergyLines");
+    if (!layer) return;
+    layer.innerHTML = "";
+
+    pairs.forEach(function (p, idx) {
+      const a = getZonaCentroid(p.from);
+      const b = getZonaCentroid(p.to);
+      if (!a || !b) return;
+      // Curva bezier con control arriba
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+      const mx = (a.x + b.x) / 2;
+      const my = (a.y + b.y) / 2;
+      const offset = Math.min(120, Math.max(40, Math.hypot(dx, dy) * 0.25));
+      const cx = mx;
+      const cy = my - offset;
+
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("class", "synergy-line");
+      path.setAttribute("d", "M " + a.x + " " + a.y + " Q " + cx + " " + cy + " " + b.x + " " + b.y);
+      path.style.animationDelay = (idx * 0.2) + "s";
+      layer.appendChild(path);
+
+      // Nodos brillantes
+      const c1 = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      c1.setAttribute("class", "synergy-node");
+      c1.setAttribute("cx", a.x);
+      c1.setAttribute("cy", a.y);
+      c1.setAttribute("r", 3.5);
+      layer.appendChild(c1);
+
+      const c2 = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      c2.setAttribute("class", "synergy-node");
+      c2.setAttribute("cx", b.x);
+      c2.setAttribute("cy", b.y);
+      c2.setAttribute("r", 3.5);
+      c2.style.animationDelay = "0.4s";
+      layer.appendChild(c2);
+    });
+  }
+
+  function clearSynergyLines() {
+    const layer = document.getElementById("synergyLines");
+    if (layer) layer.innerHTML = "";
+  }
+
+  /* ---------- TOOLTIP ---------- */
+  let tooltipEl = null;
+  function showTooltip(id, ev) {
+    if (!id) { hideTooltip(); return; }
+    const z = DATA.getZonaById(id);
+    if (!z) return;
+    const empresas = DATA.getEmpresasByZona(id);
+
+    if (!tooltipEl) {
+      tooltipEl = document.createElement("div");
+      tooltipEl.className = "tooltip";
+      document.getElementById("mapStage").appendChild(tooltipEl);
+    }
+    tooltipEl.innerHTML =
+      '<div class="tooltip-title">' + escapeHtml(z.nombre) + '</div>' +
+      '<div class="tooltip-sub">' + escapeHtml(z.desc) + '</div>' +
+      (empresas.length ? '<span class="tooltip-count">' + empresas.length + ' empresa' + (empresas.length > 1 ? 's' : '') + '</span>' : '');
+
+    const stage = document.getElementById("mapStage");
+    const stageRect = stage.getBoundingClientRect();
+    const el = state.zonasData[id];
+    const svg = el.ownerSVGElement;
+    const svgRect = svg.getBoundingClientRect();
+    const b = el.getBBox();
+    const ctm = el.getCTM();
+    const svgPoint = svg.createSVGPoint();
+    svgPoint.x = b.x + b.width / 2;
+    svgPoint.y = b.y;
+    const screenPoint = svgPoint.matrixTransform(ctm);
+
+    const x = (svgRect.left - stageRect.left) + screenPoint.x;
+    const y = (svgRect.top - stageRect.top) + screenPoint.y;
+
+    tooltipEl.style.left = x + "px";
+    tooltipEl.style.top = y + "px";
+    tooltipEl.style.display = "block";
+  }
+  function hideTooltip() {
+    if (tooltipEl) tooltipEl.style.display = "none";
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  /* ---------- API pública ---------- */
+  return {
+    load: load,
+    setActive: setActive,
+    highlight: highlight,
+    clearHighlight: clearHighlight,
+    drawSynergyLines: drawSynergyLines,
+    clearSynergyLines: clearSynergyLines,
+    showTooltip: showTooltip,
+    hideTooltip: hideTooltip,
+    setOnSelect: function (fn) { state.onSelect = fn; },
+    setOnHover: function (fn) { state.onHover = fn; },
+    getZonaCenters: getZonaCenters
+  };
 })();
+
+/* Polyfill mínimo para CSS.escape (algunos navegadores antiguos) */
+if (typeof CSS === "undefined" || !CSS.escape) {
+  window.CSS = window.CSS || {};
+  CSS.escape = function (s) {
+    return String(s).replace(/([^a-zA-Z0-9_-])/g, "\\$1");
+  };
+}

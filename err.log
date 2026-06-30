@@ -1,0 +1,36 @@
+127.0.0.1 - - [30/Jun/2026 12:48:44] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:48:44] "GET /css/estilo.css HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:48:44] "GET /js/datos.js HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:48:44] "GET /js/app.js HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:48:45] "GET /mapas/plano_polo_planta_baja.svg HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:49:58] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:50:57] "GET /js/datos.js HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:51:10] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:51:10] "GET /css/estilo.css HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:51:10] "GET /js/datos.js HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:51:10] "GET /js/buscador.js HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:51:10] "GET /js/app.js HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:51:10] "GET /js/mapa.js HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:51:11] "GET /mapas/plano_polo_planta_baja.svg HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:51:32] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:51:32] "GET /css/estilo.css HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:51:32] "GET /js/datos.js HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:51:32] "GET /js/buscador.js HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:51:32] "GET /js/mapa.js HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:51:32] "GET /js/app.js HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:51:33] "GET /mapas/plano_polo_planta_baja.svg HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:51:34] code 404, message File not found
+127.0.0.1 - - [30/Jun/2026 12:51:34] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [30/Jun/2026 12:52:33] code 404, message File not found
+127.0.0.1 - - [30/Jun/2026 12:52:33] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [30/Jun/2026 12:57:05] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:57:05] "GET /mapas/plano_polo_planta_baja.svg HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:57:05] "GET /js/datos.js HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:59:59] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:59:59] "GET /css/estilo.css HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:59:59] "GET /js/app.js HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:59:59] "GET /js/datos.js HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:59:59] "GET /js/buscador.js HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:59:59] "GET /js/mapa.js HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:59:59] "GET /mapas/plano_polo_planta_baja.svg HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 12:59:59] "GET /descripcion_mockup.md HTTP/1.1" 200 -
