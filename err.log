@@ -207,3 +207,12 @@
 127.0.0.1 - - [30/Jun/2026 19:32:56] "GET /js/mapa.js HTTP/1.1" 304 -
 127.0.0.1 - - [30/Jun/2026 19:32:56] "GET /js/app.js HTTP/1.1" 304 -
 127.0.0.1 - - [30/Jun/2026 19:32:56] "GET /mapas/plano_polo_planta_baja.svg HTTP/1.1" 304 -
+127.0.0.1 - - [30/Jun/2026 22:02:23] "GET /index.html HTTP/1.1" 304 -
+127.0.0.1 - - [30/Jun/2026 22:02:23] "GET /css/estilo.css HTTP/1.1" 304 -
+127.0.0.1 - - [30/Jun/2026 22:02:23] "GET /js/datos.js HTTP/1.1" 304 -
+127.0.0.1 - - [30/Jun/2026 22:02:23] "GET /js/buscador.js HTTP/1.1" 304 -
+127.0.0.1 - - [30/Jun/2026 22:02:23] "GET /js/mapa.js HTTP/1.1" 304 -
+127.0.0.1 - - [30/Jun/2026 22:02:23] "GET /js/app.js HTTP/1.1" 304 -
+127.0.0.1 - - [30/Jun/2026 22:02:23] "GET /mapas/plano_polo_planta_baja.svg HTTP/1.1" 304 -
+127.0.0.1 - - [30/Jun/2026 22:48:51] "GET /index.html HTTP/1.1" 304 -
+127.0.0.1 - - [30/Jun/2026 22:48:51] "GET /css/estilo.css HTTP/1.1" 304 -
