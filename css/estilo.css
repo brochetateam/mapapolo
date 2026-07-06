@@ -384,8 +384,8 @@ input {
   .layout {
     grid-template-columns: 1fr;
     height: auto;
-    min-height: calc(100vh - var(--header-h));
-    overflow-y: auto;
+    min-height: 0;
+    overflow-y: visible;
   }
 
   .map-section {
@@ -400,6 +400,7 @@ input {
     position: static !important;
     max-height: none !important;
     overflow-y: visible !important;
+    height: auto;
   }
 
   body {
