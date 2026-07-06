@@ -387,6 +387,24 @@ input {
     order: -1;
   }
 
+  .map-card-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .map-card-title {
+    width: 100%;
+  }
+
+  .map-card-title h2 {
+    font-size: 18px;
+  }
+
+  .map-card-legend {
+    width: 100%;
+  }
+
   .side-panel {
     position: static !important;
     max-height: none !important;
