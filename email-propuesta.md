@@ -17,7 +17,8 @@ Os compartimos una propuesta que hemos estado desarrollando: **MAPAPOLO**, un ma
 - **Mapa del plano oficial** — cada zona del edificio es cliqueable, con información del espacio y las empresas asignadas.
 - **Buscador semántico** — puedes escribir *"estudio de audio"*, *"animación 3D"* o *"necesito colaboración en videojuegos"* y encuentra empresas sin necesidad de saber el nombre exacto.
 - **Sinergias con IA** — al seleccionar una empresa, el sistema cruza tecnologías y sectores para proponer colaboraciones potenciales con otras empresas del Polo, mostrando las conexiones visualmente sobre el mapa.
-- **Diseño responsive** — funciona en escritorio y móvil, con modo oscuro/claro.
+- **Diseñado para la pantalla táctil de la entrada del Polo** — la interfaz responsive funciona tanto en móvil como en pantalla táctil vertical, con zonas grandes y navegación adaptada al uso interactivo en el hall de recepción.
+- **Diseño responsive** — funciona en escritorio, tablet y móvil, con modo oscuro/claro.
 
 ### Estado actual
 
