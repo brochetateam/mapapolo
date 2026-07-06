@@ -64,44 +64,14 @@ window.MAPAPOLO_DATA = (function () {
   /* Cada empresa está asociada a una o varias zonas por id del SVG. */
   const empresas = [
     {
-      id: "64train",
-      nombre: "64Train",
-      web: "https://www.64train.com",
-      sector: "Videojuegos",
-      desc: "Estudio de desarrollo de videojuegos. Formación y desarrollo creativo en el sector del entertainment digital.",
-      tech: ["Unity", "C#", "Game Design", "Unreal Engine"],
-      zonas: ["of1", "of4"],
-      color: "#ef4444"
-    },
-    {
       id: "ademass",
       nombre: "Ademass",
       web: "https://ademass.com",
       sector: "Marketing Digital",
       desc: "Agencia de marketing digital y comunicación. Estrategias, branding y growth.",
       tech: ["SEO", "SEM", "Analytics", "Content"],
-      zonas: ["of5"],
+      zonas: [],
       color: "#a855f7"
-    },
-    {
-      id: "bebite",
-      nombre: "Bebite",
-      web: "https://bebite.net",
-      sector: "Ciberseguridad",
-      desc: "Empresa especializada en ciberseguridad y protección de datos.",
-      tech: ["Pentesting", "Security Audit", "Compliance"],
-      zonas: ["of2"],
-      color: "#22c55e"
-    },
-    {
-      id: "bestridesimulators",
-      nombre: "Best Ride Simulators",
-      web: "https://bestridesimulators.com",
-      sector: "Simulación",
-      desc: "Simuladores de conducción y experiencias inmersivas de entrenamiento.",
-      tech: ["Unreal Engine", "VR", "Motion Simulation"],
-      zonas: ["of3"],
-      color: "#06b6d4"
     },
     {
       id: "cienciavr",
@@ -144,16 +114,6 @@ window.MAPAPOLO_DATA = (function () {
       color: "#ef4444"
     },
     {
-      id: "forgottenempires",
-      nombre: "Forgotten Empires",
-      web: "https://www.forgottenempires.net",
-      sector: "Videojuegos AAA",
-      desc: "Estudio veterano desarrollador de la saga Age of Empires. Uno de los estudios internacionales de referencia en el Polo.",
-      tech: ["Unreal Engine", "C++", "Multiplayer", "Strategy Games"],
-      zonas: ["of1", "of4"],
-      color: "#ef4444"
-    },
-    {
       id: "gimnasioescenico",
       nombre: "Gimnasio Escénico",
       web: "https://gimnasioescenico.com",
@@ -184,16 +144,6 @@ window.MAPAPOLO_DATA = (function () {
       color: "#ef4444"
     },
     {
-      id: "inone",
-      nombre: "Inone",
-      web: "https://www.inone.es",
-      sector: "Inteligencia Artificial",
-      desc: "Soluciones de inteligencia artificial aplicadas a empresa.",
-      tech: ["LLM", "NLP", "Computer Vision", "ML Ops"],
-      zonas: ["of4"],
-      color: "#22c55e"
-    },
-    {
       id: "krilloud",
       nombre: "Krilloud",
       web: "https://krilloud.com",
@@ -204,16 +154,6 @@ window.MAPAPOLO_DATA = (function () {
       color: "#22c55e"
     },
     {
-      id: "mickrea",
-      nombre: "Mickrea",
-      web: "https://mickrea.com",
-      sector: "Realidad Mixta",
-      desc: "Estudio de realidad mixta, aumentada y experiencias XR para marcas y educación.",
-      tech: ["MR", "ARKit", "ARCore", "Vision Pro", "Meta Quest"],
-      zonas: ["of2"],
-      color: "#a855f7"
-    },
-    {
       id: "pablobecerra",
       nombre: "Pablo Becerra",
       web: "https://es.linkedin.com/in/pablo-becerra-l%C3%B3pez",
@@ -222,16 +162,6 @@ window.MAPAPOLO_DATA = (function () {
       tech: ["Houdini", "ZBrush", "Substance", "Maya"],
       zonas: ["cw1"],
       color: "#f59e0b"
-    },
-    {
-      id: "murcielagos",
-      nombre: "Murciélagos",
-      web: "https://murcielagosmalaga.com",
-      sector: "Videojuegos",
-      desc: "Estudio malagueño de desarrollo de videojuegos. Narrativa y arte cuidado.",
-      tech: ["Unity", "Pixel Art", "2D Animation"],
-      zonas: ["of3"],
-      color: "#ef4444"
     },
     {
       id: "naolito",
@@ -254,34 +184,14 @@ window.MAPAPOLO_DATA = (function () {
       color: "#ec4899"
     },
     {
-      id: "owogame",
-      nombre: "OWO Game",
-      web: "https://owogame.com/es/",
-      sector: "Videojuegos Haptic",
-      desc: "Videojuegos con feedback háptico wearable. Integración sensorial en el gameplay.",
-      tech: ["Unreal Engine", "Haptics", "Wearable", "VR"],
-      zonas: ["of4"],
-      color: "#ef4444"
-    },
-    {
       id: "prosfy",
       nombre: "Prosfy",
       web: "https://prosfy.com/es/",
       sector: "Sports Tech",
       desc: "Tecnología aplicada al deporte. Plataformas y datos para clubes y atletas.",
       tech: ["Data Analytics", "App Dev", "IoT"],
-      zonas: ["of5"],
+      zonas: [],
       color: "#22c55e"
-    },
-    {
-      id: "redvelgames",
-      nombre: "Redvel Games",
-      web: "https://redvelgames.com",
-      sector: "Videojuegos",
-      desc: "Estudio de videojuegos para móvil. Free to play y casual.",
-      tech: ["Unity", "C#", "Mobile Dev", "Backend"],
-      zonas: ["of2"],
-      color: "#ef4444"
     },
     {
       id: "releevant",
@@ -290,7 +200,7 @@ window.MAPAPOLO_DATA = (function () {
       sector: "IA / Personalización",
       desc: "IA aplicada a e-commerce y personalización de la experiencia de usuario.",
       tech: ["ML", "Recommender Systems", "NLP"],
-      zonas: ["of5"],
+      zonas: [],
       color: "#22c55e"
     },
     {
@@ -304,13 +214,154 @@ window.MAPAPOLO_DATA = (function () {
       color: "#06b6d4"
     },
     {
+      id: "inone2",
+      nombre: "Inone Lab",
+      web: "https://www.inone.es",
+      sector: "IA / I+D",
+      desc: "Laboratorio de experimentación en inteligencia artificial aplicada al sector creativo.",
+      tech: ["Generative AI", "Stable Diffusion", "LLM", "Computer Vision"],
+      zonas: [],
+      color: "#22c55e"
+    },
+    {
+      id: "nachoarranz",
+      nombre: "Nacho Arranz",
+      web: "https://nachoarranz.com/nacho-arranz",
+      sector: "Arte / Ilustración",
+      desc: "Dibujante e ilustrador profesional con más de 18 años de experiencia. Academia online y presencial de cómic e ilustración en Málaga.",
+      tech: ["Dibujo", "Cómic", "Ilustración", "Manga", "Diseño de Personajes"],
+      zonas: ["of1"],
+      color: "#f59e0b"
+    },
+    {
+      id: "axtragaming",
+      nombre: "Axtra Gaming Club",
+      web: "https://axtragaming.club/",
+      sector: "eSports / Gaming",
+      desc: "Club de eSports multidisciplinar en Málaga con campamentos de verano y formación para 8-16 años en gaming, livestreaming, edición de vídeo, game design e IA.",
+      tech: ["eSports", "Streaming", "OBS", "Game Design", "Roblox Studio", "IA"],
+      zonas: ["of3"],
+      color: "#06b6d4"
+    },
+    {
+      id: "vrestudio",
+      nombre: "VR Estudio",
+      web: "https://vrestudio.com/app",
+      sector: "Turismo Inteligente / Realidad Aumentada",
+      desc: "Agencia de experiencias turísticas inmersivas. Creadores de App Turismo, una aplicación avalada por el Ministerio de Cultura para Destinos Turísticos Inteligentes con rutas con IA, mapas interactivos y realidad aumentada.",
+      tech: ["Realidad Aumentada", "IA", "Mapas Interactivos", "Turismo"],
+      zonas: ["of5"],
+      color: "#22c55e"
+    },
+    {
+      id: "ofitecnica",
+      nombre: "Oficina Técnica",
+      web: "https://www.polodigital.eu",
+      sector: "Gestión / Institución",
+      desc: "Oficina técnica del Polo Nacional de Contenidos Digitales. Gestiona la preincubación, incubación, aceleración y programas de formación gratuita del Polo.",
+      tech: ["Incubación", "Aceleración", "Formación", "Innovación"],
+      zonas: ["of4"],
+      color: "#6366f1"
+    },
+    /* Empresas posiblemente ubicadas en la primera planta (pendiente de confirmar) */
+    {
+      id: "64train",
+      nombre: "64Train",
+      web: "https://www.64train.com",
+      sector: "Videojuegos",
+      desc: "Estudio de desarrollo de videojuegos. Formación y desarrollo creativo en el sector del entertainment digital.",
+      tech: ["Unity", "C#", "Game Design", "Unreal Engine"],
+      zonas: [],
+      color: "#ef4444"
+    },
+    {
+      id: "bebite",
+      nombre: "Bebite",
+      web: "https://bebite.net",
+      sector: "Ciberseguridad",
+      desc: "Empresa especializada en ciberseguridad y protección de datos.",
+      tech: ["Pentesting", "Security Audit", "Compliance"],
+      zonas: [],
+      color: "#22c55e"
+    },
+    {
+      id: "bestridesimulators",
+      nombre: "Best Ride Simulators",
+      web: "https://bestridesimulators.com",
+      sector: "Simulación",
+      desc: "Simuladores de conducción y experiencias inmersivas de entrenamiento.",
+      tech: ["Unreal Engine", "VR", "Motion Simulation"],
+      zonas: [],
+      color: "#06b6d4"
+    },
+    {
+      id: "forgottenempires",
+      nombre: "Forgotten Empires",
+      web: "https://www.forgottenempires.net",
+      sector: "Videojuegos AAA",
+      desc: "Estudio veterano desarrollador de la saga Age of Empires. Uno de los estudios internacionales de referencia en el Polo.",
+      tech: ["Unreal Engine", "C++", "Multiplayer", "Strategy Games"],
+      zonas: [],
+      color: "#ef4444"
+    },
+    {
+      id: "inone",
+      nombre: "Inone",
+      web: "https://www.inone.es",
+      sector: "Inteligencia Artificial",
+      desc: "Soluciones de inteligencia artificial aplicadas a empresa.",
+      tech: ["LLM", "NLP", "Computer Vision", "ML Ops"],
+      zonas: [],
+      color: "#22c55e"
+    },
+    {
+      id: "mickrea",
+      nombre: "Mickrea",
+      web: "https://mickrea.com",
+      sector: "Realidad Mixta",
+      desc: "Estudio de realidad mixta, aumentada y experiencias XR para marcas y educación.",
+      tech: ["MR", "ARKit", "ARCore", "Vision Pro", "Meta Quest"],
+      zonas: [],
+      color: "#a855f7"
+    },
+    {
+      id: "murcielagos",
+      nombre: "Murciélagos",
+      web: "https://murcielagosmalaga.com",
+      sector: "Videojuegos",
+      desc: "Estudio malagueño de desarrollo de videojuegos. Narrativa y arte cuidado.",
+      tech: ["Unity", "Pixel Art", "2D Animation"],
+      zonas: [],
+      color: "#ef4444"
+    },
+    {
+      id: "owogame",
+      nombre: "OWO Game",
+      web: "https://owogame.com/es/",
+      sector: "Videojuegos Haptic",
+      desc: "Videojuegos con feedback háptico wearable. Integración sensorial en el gameplay.",
+      tech: ["Unreal Engine", "Haptics", "Wearable", "VR"],
+      zonas: [],
+      color: "#ef4444"
+    },
+    {
+      id: "redvelgames",
+      nombre: "Redvel Games",
+      web: "https://redvelgames.com",
+      sector: "Videojuegos",
+      desc: "Estudio de videojuegos para móvil. Free to play y casual.",
+      tech: ["Unity", "C#", "Mobile Dev", "Backend"],
+      zonas: [],
+      color: "#ef4444"
+    },
+    {
       id: "twindustry",
       nombre: "Tindustry",
       web: "https://www.twindustry.net",
       sector: "Industria 4.0",
       desc: "Soluciones de industria 4.0, simulación y gemelos digitales para el sector industrial.",
       tech: ["Unity", "IoT", "Digital Twin", "Simulación"],
-      zonas: ["of3"],
+      zonas: [],
       color: "#06b6d4"
     },
     {
@@ -320,18 +371,8 @@ window.MAPAPOLO_DATA = (function () {
       sector: "Videojuegos",
       desc: "Estudio independiente de videojuegos narrativos.",
       tech: ["Unity", "C#", "Narrative"],
-      zonas: ["of2"],
+      zonas: [],
       color: "#ef4444"
-    },
-    {
-      id: "inone2",
-      nombre: "Inone Lab",
-      web: "https://www.inone.es",
-      sector: "IA / I+D",
-      desc: "Laboratorio de experimentación en inteligencia artificial aplicada al sector creativo.",
-      tech: ["Generative AI", "Stable Diffusion", "LLM", "Computer Vision"],
-      zonas: ["of5"],
-      color: "#22c55e"
     }
   ];
 

@@ -54,7 +54,8 @@
     "agora1", "agora2",
     "au1", "au2", "au3", "au4", "au5", "au6",
     "cw1", "cw2",
-    "antesala", "office"
+    "antesala", "office",
+    "of4"
   ];
   let statsAnimated = false;
 

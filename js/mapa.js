@@ -194,8 +194,9 @@ window.MAPAPOLO_MAPA = (function () {
     }
     tooltipEl.innerHTML =
       '<div class="tooltip-title">' + escapeHtml(z.nombre) + '</div>' +
+      (empresas.length === 1 ? '<div class="tooltip-empresa">' + escapeHtml(empresas[0].nombre) + ' <span class="tooltip-sector">' + escapeHtml(empresas[0].sector) + '</span></div>' : '') +
       '<div class="tooltip-sub">' + escapeHtml(z.desc) + '</div>' +
-      (empresas.length ? '<span class="tooltip-count">' + empresas.length + ' empresa' + (empresas.length > 1 ? 's' : '') + '</span>' : '');
+      (empresas.length > 1 ? '<span class="tooltip-count">' + empresas.length + ' empresa' + (empresas.length > 1 ? 's' : '') + '</span>' : '');
 
     const stage = document.getElementById("mapStage");
     const stageRect = stage.getBoundingClientRect();
