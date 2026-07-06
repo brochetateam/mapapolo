@@ -196,7 +196,7 @@
   }
 
   function showSinergias(empresaId) {
-    const sinergias = BUS.emparejarSinergias(empresaId, 3);
+    const sinergias = BUS.emparejarSinergias(empresaId, 2);
     if (!sinergias.length) {
       els.sinergiasBody.innerHTML = '<p class="sinergias-empty">Aún no detectamos sinergias relevantes para esta empresa.</p>';
       MAPA.clearSynergyLines();

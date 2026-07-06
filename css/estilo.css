@@ -252,9 +252,8 @@ input { font: inherit; }
   gap: 0;
   height: 100%;
   min-height: 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding: 4px 0;
+  overflow: hidden;
+  padding: 2px 0;
 }
 
 /* ---------- CARDS base (sin fondo, sin borde) ---------- */
@@ -272,41 +271,41 @@ input { font: inherit; }
 
 .card-title {
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 700;
   letter-spacing: -0.01em;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
 }
 .card-sub {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-muted);
-  line-height: 1.4;
+  line-height: 1.3;
 }
 
 /* ---------- Tarjeta Directorio ---------- */
 .card-directorio {
   background: transparent;
   flex-shrink: 0;
-  padding-bottom: 4px;
+  padding-bottom: 2px;
 }
 
 .card-directorio-head {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
+  gap: 8px;
+  margin-bottom: 3px;
 }
 
 .avatar {
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
-  min-height: 40px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
   border-radius: var(--radius-full);
   display: grid;
   place-items: center;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 12px;
   color: #fff;
   flex-shrink: 0;
   background: var(--bg-canvas);
@@ -329,17 +328,17 @@ input { font: inherit; }
 .card-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
-  min-height: 28px;
+  gap: 3px;
+  min-height: 20px;
   align-items: center;
 }
 
 .tag {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px 9px;
-  font-size: 10.5px;
+  gap: 3px;
+  padding: 2px 7px;
+  font-size: 10px;
   font-weight: 500;
   border-radius: var(--radius-full);
   background: rgba(255, 255, 255, 0.04);
@@ -442,7 +441,7 @@ input { font: inherit; }
 
 /* ---------- Tarjeta Empresa ---------- */
 .card-empresa {
-  flex: 1;
+  flex: 0 0 auto;
   min-height: 0;
   display: flex;
   flex-direction: column;
@@ -451,70 +450,69 @@ input { font: inherit; }
 
 .empresa-empty {
   text-align: center;
-  padding: 8px;
+  padding: 2px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 2px;
   justify-content: center;
-  flex: 1;
 }
 .empty-illustration {
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   display: grid;
   place-items: center;
   border-radius: var(--radius-full);
   background: radial-gradient(circle, rgba(34, 211, 238, 0.15) 0%, transparent 70%);
   color: var(--neon-cyan);
-  margin-bottom: 2px;
+  margin-bottom: 0;
 }
-.empty-illustration svg { width: 28px; height: 28px; }
+.empty-illustration svg { width: 20px; height: 20px; }
 .empresa-empty-title {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   margin: 0;
   color: var(--text-primary);
 }
 .empresa-empty-sub {
-  font-size: 12.5px;
+  font-size: 11.5px;
   color: var(--text-muted);
   margin: 0;
-  line-height: 1.5;
-  max-width: 280px;
+  line-height: 1.3;
+  max-width: 260px;
 }
 
 .empresa-content {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  flex: 1;
+  gap: 3px;
+  flex: 0 0 auto;
   min-height: 0;
   overflow: hidden;
 }
 .empresa-head {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: 8px;
 }
 .empresa-meta { flex: 1; min-width: 0; }
 .empresa-meta h3 {
   font-family: var(--font-display);
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: -0.01em;
-  margin: 0 0 4px;
+  margin: 0 0 2px;
   word-break: break-word;
-  line-height: 1.25;
-  min-height: 1.25em;
+  line-height: 1.2;
+  min-height: 1.2em;
 }
 .empresa-meta p {
   display: flex;
   align-items: center;
   gap: 4px;
-  margin: 2px 0;
-  font-size: 12.5px;
-  line-height: 1.3;
+  margin: 1px 0;
+  font-size: 11.5px;
+  line-height: 1.2;
 }
 .icon-btn {
   width: 30px;
@@ -531,22 +529,22 @@ input { font: inherit; }
 .icon-btn:hover { background: rgba(255, 255, 255, 0.12); color: var(--text-primary); }
 
 .empresa-desc {
-  font-size: 12.5px;
+  font-size: 11.5px;
   color: var(--text-secondary);
-  line-height: 1.45;
+  line-height: 1.3;
   word-break: break-word;
   overflow-wrap: anywhere;
   margin: 0;
   flex-shrink: 0;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 .empresa-tech {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 3px;
   align-items: flex-start;
   align-content: flex-start;
   flex-shrink: 0;
@@ -584,13 +582,13 @@ input { font: inherit; }
 .sinergias-head {
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-bottom: 4px;
+  gap: 4px;
+  margin-bottom: 2px;
   flex-shrink: 0;
 }
 .sinergias-head h3 {
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: -0.01em;
   flex: 1;
@@ -598,43 +596,42 @@ input { font: inherit; }
 .dots {
   color: var(--text-muted);
   letter-spacing: 2px;
-  font-size: 14px;
+  font-size: 12px;
 }
 .badge-ai {
   display: inline-flex;
   align-items: center;
-  font-size: 10.5px;
+  font-size: 9.5px;
   font-weight: 700;
   letter-spacing: 0.05em;
-  padding: 3px 8px;
+  padding: 2px 6px;
   border-radius: var(--radius-full);
   background: linear-gradient(135deg, var(--neon-cyan), var(--neon-violet));
   color: var(--bg-canvas);
 }
 
 .sinergias-body {
-  margin: 4px 0;
+  margin: 2px 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
+  overflow: hidden;
 }
 .sinergias-empty {
-  font-size: 12.5px;
+  font-size: 11.5px;
   color: var(--text-muted);
   font-style: italic;
 }
 .synergy-card {
   background: transparent;
   border: 1px solid var(--border-soft);
-  border-radius: var(--radius-md);
-  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
   position: relative;
   overflow: hidden;
   transition: border-color .2s var(--ease), transform .2s var(--ease);
@@ -654,15 +651,15 @@ input { font: inherit; }
 .synergy-card-head {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
+  gap: 6px;
+  font-size: 12px;
   font-weight: 600;
 }
 .synergy-card-score {
   margin-left: auto;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
-  padding: 2px 8px;
+  padding: 1px 6px;
   border-radius: var(--radius-full);
   background: rgba(34, 211, 238, 0.12);
   color: var(--neon-cyan);
@@ -671,20 +668,11 @@ input { font: inherit; }
 .synergy-card-score.high { background: rgba(74, 222, 128, 0.15); color: var(--neon-green); }
 .synergy-card-score.med { background: rgba(251, 146, 60, 0.15); color: var(--neon-orange); }
 .synergy-card-reason {
-  font-size: 11.5px;
+  font-size: 10.5px;
   color: var(--text-muted);
-  line-height: 1.5;
+  line-height: 1.3;
   word-break: break-word;
   overflow-wrap: anywhere;
-}
-
-.sinergias-diagram {
-  margin-top: 10px;
-  background: transparent;
-  border-radius: var(--radius-md);
-  padding: 8px;
-  border: none;
-  flex-shrink: 0;
 }
 
 .btn-cta {
