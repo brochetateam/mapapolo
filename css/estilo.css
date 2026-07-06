@@ -333,7 +333,7 @@ input {
   height: 100%;
   min-height: 0;
   overflow: hidden;
-  padding: 70px 0;
+  padding: 60px 0;
 }
 
 /* ---------- CARDS base (sin fondo, sin borde) ---------- */
@@ -1023,10 +1023,13 @@ input {
   height: 100%;
   display: block;
   filter: none;
+  background: #0a0e1f;
+  border-radius: var(--radius-md);
 }
 
 :root[data-theme="light"] .svg-host svg {
   filter: none;
+  background: #f4f6f9;
 }
 
 /* ---------- Zonas interactivas dentro del SVG ---------- */
