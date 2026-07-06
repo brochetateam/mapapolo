@@ -40,9 +40,8 @@
     mapStage: $("#mapStage"),
     mapHint: $("#mapHint"),
     toastContainer: $("#toastContainer"),
-    fabSearch: $("#fabSearch"),
-    fabReset: $("#fabReset"),
-    fabTop: $("#fabTop"),
+    menuToggle: $("#menuToggle"),
+    headerMenu: $("#headerMenu"),
     themeToggle: $("#themeToggle"),
     themeIcon: $("#themeIcon"),
     statNums: $$(".stat-num")
@@ -400,20 +399,18 @@
         }
       });
     }
-    if (els.fabSearch) {
-      els.fabSearch.addEventListener("click", function () {
-        if (els.searchInput) els.searchInput.focus();
+    if (els.menuToggle) {
+      els.menuToggle.addEventListener("click", function () {
+        const open = els.headerMenu.classList.toggle("is-open");
+        els.menuToggle.classList.toggle("is-open");
+        els.menuToggle.setAttribute("aria-expanded", open);
       });
-    }
-    if (els.fabReset) {
-      els.fabReset.addEventListener("click", function () {
-        resetSelection();
-        toast("Vista reiniciada", "success");
-      });
-    }
-    if (els.fabTop) {
-      els.fabTop.addEventListener("click", function () {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+      document.addEventListener("click", function (e) {
+        if (!els.menuToggle.contains(e.target) && !els.headerMenu.contains(e.target)) {
+          els.headerMenu.classList.remove("is-open");
+          els.menuToggle.classList.remove("is-open");
+          els.menuToggle.setAttribute("aria-expanded", "false");
+        }
       });
     }
     if (els.themeToggle) {
