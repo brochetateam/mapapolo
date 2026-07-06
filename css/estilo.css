@@ -252,7 +252,8 @@ input { font: inherit; }
   gap: 0;
   height: 100%;
   min-height: 0;
-  overflow: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 4px 0;
 }
 
@@ -618,7 +619,8 @@ input { font: inherit; }
   gap: 6px;
   flex: 1;
   min-height: 0;
-  overflow: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .sinergias-empty {
   font-size: 12.5px;
