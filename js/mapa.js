@@ -11,7 +11,7 @@ window.MAPAPOLO_MAPA = (function () {
 
   const DATA = window.MAPAPOLO_DATA;
   const SVG_URL = "mapas/plano_polo_planta_baja.svg";
-  const SVG_URL_FALLBACK = "../Plano POLO Planta Baja/plano_polo_planta_baja.svg";
+  const SVG_URL_FALLBACK = "mapas/plano_polo_planta_baja.svg";
 
   const state = {
     zonasData: {},

@@ -1,0 +1,17 @@
+# Entornos de desarrollo (no necesarios para la web estática)
+Plano POLO Planta Baja/
+Plano POLO Planta Primera/
+documentacion/
+
+# Logs
+err.log
+out.log
+
+# Pruebas locales
+test_visual.py
+
+# Binarios/imágenes grandes (ya servimos desde SVG)
+*.png
+*.jpg
+*.jpeg
+v1_1440x900.png
