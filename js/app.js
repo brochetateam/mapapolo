@@ -129,7 +129,6 @@
     els.empresaTech.innerHTML = '<span class="tag tag-cyan">Espacio común</span><span class="tag">' + (z.m2 || "?") + ' m²</span>';
     els.empresaWeb.hidden = true;
     showSinergiasForZona(zoneId);
-    updateMobileList(empresas, z);
   }
 
   function showZonaLista(z, empresas, zoneId) {
@@ -156,7 +155,6 @@
     });
 
     showSinergiasForZona(zoneId);
-    updateMobileList(empresas, z);
   }
 
   function showEmpresa(empresaId, fromZoneId) {
@@ -201,7 +199,6 @@
 
     // Sinergias
     showSinergias(empresaId);
-    updateMobileList([e], null);
   }
 
   function showSinergias(empresaId) {
@@ -286,19 +283,6 @@
       });
     });
     MAPA.clearSynergyLines();
-  }
-
-  function updateMobileList(empresas, z) {
-    const container = $(".mobile-list");
-    if (!container) return;
-    const head = $(".mobile-list-head span", container);
-    if (z) {
-      container.querySelector(".mobile-list-head span").textContent = z.nombre;
-    } else if (empresas.length === 1) {
-      container.querySelector(".mobile-list-head span").textContent = empresas[0].nombre;
-    } else {
-      container.querySelector(".mobile-list-head span").textContent = "Habitantes · planta baja";
-    }
   }
 
   function resetSelection() {
