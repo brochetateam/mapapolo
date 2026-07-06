@@ -383,10 +383,21 @@ input {
 }
 
 @media (max-width: 1100px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    touch-action: pan-y;
+  }
+
   .layout {
     grid-template-columns: 1fr;
     height: auto;
-    min-height: calc(100vh - var(--header-h));
+    min-height: 0;
+    flex: 1 0 auto;
     overflow-y: visible;
   }
 
@@ -403,14 +414,6 @@ input {
     max-height: none !important;
     overflow-y: visible !important;
     height: auto;
-  }
-
-  body {
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: auto;
-    min-height: 100vh;
-    touch-action: pan-y;
   }
 
   .map-section {
