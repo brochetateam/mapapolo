@@ -34,6 +34,7 @@
     empresaWeb: $("#empresaWeb"),
     empresaClose: $("#empresaClose"),
     empresaCard: $("#empresaCard"),
+    sinergiasCard: $("#sinergias"),
     sinergiasBody: $("#sinergiasBody"),
     btnVerSinergias: $("#btnVerSinergias"),
     mapStage: $("#mapStage"),
@@ -48,6 +49,14 @@
   };
 
   let currentEmpresaId = null;
+
+  // Zonas que NO deben mostrar sinergias IA
+  const ZONAS_SIN_SINERGIAS = [
+    "agora1", "agora2",
+    "au1", "au2", "au3", "au4", "au5", "au6",
+    "cw1", "cw2",
+    "antesala", "office"
+  ];
   let statsAnimated = false;
 
   /* ---------- INIT ---------- */
@@ -196,6 +205,7 @@
   }
 
   function showSinergias(empresaId) {
+    els.sinergiasCard.hidden = false;
     const sinergias = BUS.emparejarSinergias(empresaId, 2);
     if (!sinergias.length) {
       els.sinergiasBody.innerHTML = '<p class="sinergias-empty">Aún no detectamos sinergias relevantes para esta empresa.</p>';
@@ -239,13 +249,20 @@
   }
 
   function showSinergiasForZona(zoneId) {
-    const empresas = DATA.getEmpresasByZona(zoneId);
-    if (!empresas.length) {
-      els.sinergiasBody.innerHTML = '<p class="sinergias-empty">Esta zona no tiene empresas asignadas todavía. Es un espacio común.</p>';
+    if (ZONAS_SIN_SINERGIAS.indexOf(zoneId) !== -1) {
+      els.sinergiasCard.hidden = true;
       MAPA.clearSynergyLines();
       MAPA.clearHighlight();
       return;
     }
+    const empresas = DATA.getEmpresasByZona(zoneId);
+    if (!empresas.length) {
+      els.sinergiasCard.hidden = true;
+      MAPA.clearSynergyLines();
+      MAPA.clearHighlight();
+      return;
+    }
+    els.sinergiasCard.hidden = false;
     // Mostrar mini-sinergia entre las de la zona
     if (empresas.length === 1) {
       showSinergias(empresas[0].id);
@@ -291,6 +308,7 @@
     MAPA.clearSynergyLines();
     els.empresaEmpty.hidden = false;
     els.empresaContent.hidden = true;
+    els.sinergiasCard.hidden = false;
     els.sinergiasBody.innerHTML = '<p class="sinergias-empty">Selecciona una empresa para ver sus sinergias recomendadas.</p>';
   }
 

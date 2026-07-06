@@ -204,16 +204,6 @@ window.MAPAPOLO_DATA = (function () {
       color: "#22c55e"
     },
     {
-      id: "malagafilmoffice",
-      nombre: "Málaga Film Office",
-      web: "https://www.malagafilmoffice.com",
-      sector: "Film Commission",
-      desc: "Oficina de promoción de Málaga como plató cinematográfico. Institucional.",
-      tech: ["Networking", "Producción", "Institucional"],
-      zonas: ["antesala"],
-      color: "#06b6d4"
-    },
-    {
       id: "mickrea",
       nombre: "Mickrea",
       web: "https://mickrea.com",
