@@ -327,6 +327,7 @@ input {
 @media (max-width: 720px) {
   .hamburger {
     display: flex;
+    touch-action: manipulation;
   }
 
   .header-actions {
@@ -412,7 +413,7 @@ input {
   .side-panel {
     position: static !important;
     max-height: none !important;
-    overflow-y: visible !important;
+    overflow: visible !important;
     height: auto;
   }
 
@@ -423,6 +424,10 @@ input {
   .side-panel {
     padding-top: 24px;
     padding-bottom: 24px;
+  }
+
+  .site-footer {
+    flex-shrink: 0;
   }
 }
 
@@ -1563,6 +1568,8 @@ input {
 
 @media (max-width: 640px) {
   body {
+    display: flex;
+    flex-direction: column;
     overflow-y: auto;
     height: auto;
     min-height: 100vh;
