@@ -401,7 +401,20 @@
       });
     }
     if (els.menuToggle) {
-      els.menuToggle.addEventListener("click", function () {
+      // Evita que un deslizamiento (swipe) horizontal abra el menú:
+      // solo cuenta como click si el dedo barely se movió.
+      let touchMoved = false;
+      els.menuToggle.addEventListener("touchstart", function () {
+        touchMoved = false;
+      }, { passive: true });
+      els.menuToggle.addEventListener("touchmove", function () {
+        touchMoved = true;
+      }, { passive: true });
+      els.menuToggle.addEventListener("click", function (e) {
+        if (touchMoved) {
+          e.preventDefault();
+          return;
+        }
         const open = els.headerMenu.classList.toggle("is-open");
         els.menuToggle.classList.toggle("is-open");
         els.menuToggle.setAttribute("aria-expanded", open);
