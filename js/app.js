@@ -401,35 +401,7 @@
       });
     }
     if (els.menuToggle) {
-      let touchStartX = 0;
-      let touchStartY = 0;
-      let touchStartTime = 0;
-      let swiped = false;
-
-      els.menuToggle.addEventListener("touchstart", function (e) {
-        touchStartX = e.changedTouches[0].clientX;
-        touchStartY = e.changedTouches[0].clientY;
-        touchStartTime = Date.now();
-        swiped = false;
-      }, { passive: true });
-
-      els.menuToggle.addEventListener("touchmove", function (e) {
-        const dx = Math.abs(e.changedTouches[0].clientX - touchStartX);
-        const dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
-        if (dx > 10 || dy > 10) swiped = true;
-      }, { passive: true });
-
-      els.menuToggle.addEventListener("touchend", function (e) {
-        const dt = Date.now() - touchStartTime;
-        if (!swiped && dt < 400) {
-          const open = els.headerMenu.classList.toggle("is-open");
-          els.menuToggle.classList.toggle("is-open");
-          els.menuToggle.setAttribute("aria-expanded", open);
-        }
-      });
-
-      els.menuToggle.addEventListener("click", function (e) {
-        if (swiped) { e.preventDefault(); e.stopPropagation(); return; }
+      els.menuToggle.addEventListener("click", function () {
         const open = els.headerMenu.classList.toggle("is-open");
         els.menuToggle.classList.toggle("is-open");
         els.menuToggle.setAttribute("aria-expanded", open);
